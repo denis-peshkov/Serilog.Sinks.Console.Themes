@@ -1,4 +1,4 @@
-﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
+namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
 internal sealed class TrueColorTests
@@ -26,6 +26,23 @@ internal sealed class TrueColorTests
         var c = Color.FromName(cc.ToString());
         var expected = $"\x1b[38;2;{c.R};{c.G};{c.B}m";
         TrueColor.Foreground(cc).Should().Be(expected);
+    }
+
+    [Test]
+    public void Background_ConsoleColor_matches_Color_FromName()
+    {
+        var cc = ConsoleColor.DarkGreen;
+        var c = Color.FromName(cc.ToString());
+        var expected = $"\x1b[48;2;{c.R};{c.G};{c.B}m";
+        TrueColor.Background(cc).Should().Be(expected);
+    }
+
+    [Test]
+    public void Foreground_Color_and_Background_Color_emit_true_color_sgr()
+    {
+        var c = Color.FromArgb(11, 22, 33);
+        TrueColor.Foreground(c).Should().Be($"\x1b[38;2;{c.R};{c.G};{c.B}m");
+        TrueColor.Background(c).Should().Be($"\x1b[48;2;{c.R};{c.G};{c.B}m");
     }
 
     [Test]
