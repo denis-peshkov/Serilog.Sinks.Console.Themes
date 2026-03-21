@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/dotnet.yml" />
+  </Folder>
+  <Folder Name="/assets/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="GitVersion.yml" />
+    <File Path="img-dark.png" />
+    <File Path="img-light.png" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="ReleaseNotes.md" />
+  </Folder>
+  <Project Path="Serilog.Sinks.Console.Themes/Serilog.Sinks.Console.Themes.csproj" />
+  <Project Path="Serilog.Sinks.Console.Themes.UnitTests/Serilog.Sinks.Console.Themes.UnitTests.csproj" />
+  <Project Path="Serilog.Sinks.Console.Themes.Demo/Serilog.Sinks.Console.Themes.Demo.csproj" />
+</Solution>

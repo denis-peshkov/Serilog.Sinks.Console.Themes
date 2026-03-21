@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Serilog.Sinks.Console.Themes</id>
+    <version>0.0.0</version>
+    <authors>denis-peshkov</authors>
+    <owners>denis-peshkov</owners>
+    <copyright>Copyright 2026 Denis Peshkov</copyright>
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes</projectUrl>
+    <repository type="git" url="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes" />
+    <readme>docs\README.md</readme>
+    <icon>icon.png</icon>
+    <releaseNotes>
+      initial version
+    </releaseNotes>
+    <description>
+      A companion library for Serilog.Sinks.Console with a 24-bit ANSI (true-color) console theme built from System.Drawing.KnownColor values, plus helpers to map colors to ANSI escape sequences.
+
+      Includes CustomConsoleTheme.DarkTheme and LightTheme (namespace Serilog.Sinks.Console.Themes) and TrueColor for foreground, background, and bold styling.
+    </description>
+    <tags>serilog logging console ansi theme truecolor serilog-sinks-console dotnet csharp</tags>
+    <dependencies>
+      <dependency id="Serilog.Sinks.Console" version="6.1.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\net6.0\Serilog.Sinks.Console.Themes*.*" target="lib\net6.0" />
+    <file src="bin\Release\net7.0\Serilog.Sinks.Console.Themes*.*" target="lib\net7.0" />
+    <file src="bin\Release\net8.0\Serilog.Sinks.Console.Themes*.*" target="lib\net8.0" />
+    <file src="bin\Release\net9.0\Serilog.Sinks.Console.Themes*.*" target="lib\net9.0" />
+    <file src="bin\Release\net10.0\Serilog.Sinks.Console.Themes*.*" target="lib\net10.0" />
+    <file src="..\README.md" target="docs\" />
+    <file src="..\icon.png" target="" />
+  </files>
+</package>
