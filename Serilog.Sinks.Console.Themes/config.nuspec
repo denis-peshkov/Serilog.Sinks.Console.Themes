@@ -11,6 +11,7 @@
     <projectUrl>https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes</projectUrl>
     <repository type="git" url="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes" />
     <readme>docs\README.md</readme>
+    <icon>icon.png</icon>
     <releaseNotes>
       initial version
     </releaseNotes>
@@ -31,5 +32,6 @@
     <file src="bin\Release\net9.0\Serilog.Sinks.Console.Themes*.*" target="lib\net9.0" />
     <file src="bin\Release\net10.0\Serilog.Sinks.Console.Themes*.*" target="lib\net10.0" />
     <file src="..\README.md" target="docs\" />
+    <file src="icon.png" target="" />
   </files>
 </package>

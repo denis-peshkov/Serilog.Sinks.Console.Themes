@@ -20,7 +20,7 @@ jobs:
 
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'Cross.ErrorHandlers.sln'
+      SOLUTION: 'Serilog.Sinks.Console.Themes.slnx'
 
     runs-on: ubuntu-22.04 # ubuntu-latest
 
@@ -57,7 +57,20 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
+        run: |
+          dotnet build "$SOLUTION" --configuration "$BUILD_CONFIG" --no-restore \
+          -p:Configuration=$BUILD_CONFIG \
+          -p:Version=${GitVersion_SemVer} \
+          -p:AssemblyVersion=${GitVersion_AssemblySemVer} \
+          -p:FileVersion=${GitVersion_AssemblySemFileVer} \
+          -p:InformationalVersion="${GitVersion_InformationalVersion}" \
+          -p:Company="Denis Peshkov" \
+          -p:Product="Serilog.Sinks.Console.Themes" \
+          -p:Description="A .NET library providing unified error handling for ASP.NET Core applications. The package implements middleware that catches exceptions and transforms them into standardized JSON responses with proper HTTP status codes." \
+          -p:RepositoryUrl="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes.git" \
+          -p:RepositoryType=git \
+          -p:CLSCompliant=true \
+          -p:NeutralLanguage=en
 
       - name: Run tests
         run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
@@ -68,29 +81,29 @@ jobs:
           #          projectBaseDir: app/
           #          args: >
           #            -Dsonar.organization=peshkov
-          #            -Dsonar.projectKey=Cross.ErrorHandlers.EF
+          #            -Dsonar.projectKey=Serilog.Sinks.Console.Themes
           #            -Dsonar.python.coverage.reportPaths=coverage.xml
-          #            -Dsonar.sources=Cross.ErrorHandlers.EF/
+          #            -Dsonar.sources=Serilog.Sinks.Console.Themes/
           #            -Dsonar.tests=tests/
           #            -Dsonar.test.exclusions=tests/**
           #            -Dsonar.verbose=true
           args: >
             -Dsonar.organization=peshkov
-            -Dsonar.projectKey=Cross.ErrorHandlers
+            -Dsonar.projectKey=Serilog.Sinks.Console.Themes
             -Dsonar.python.coverage.reportPaths=coverage.xml
-            -Dsonar.sources=Cross.ErrorHandlers/
+            -Dsonar.sources=Serilog.Sinks.Console.Themes/
             -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Nuget Pack
-        run: nuget pack Cross.ErrorHandlers/config.nuspec -Symbols -Version ${{ env.semVer }}
+        run: nuget pack Serilog.Sinks.Console.Themes/config.nuspec -Symbols -Version ${{ env.semVer }}
 
       - name: ref
         run: echo "github.head_ref 1 ${{ github.head_ref }} 2 $GITHUB_REF 3 ${{ github.ref }}"
 
       - name: Create git Tag
-        if: ${{ contains('refs/heads/hotfix', github.ref) || contains('refs/heads/hotfix', github.ref) || contains('refs/heads/master', github.ref) }}
+        if: ${{ contains('refs/heads/hotfix', github.ref) || contains('refs/heads/release', github.ref) || contains('refs/heads/master', github.ref) }}
         run: |
           git tag v${{ env.semVer }}
 
@@ -104,4 +117,4 @@ jobs:
 
       - name: Nuget Push
         if: ${{ !startsWith(github.ref, 'refs/pull') }}
-        run: nuget push **/Cross.ErrorHandlers.${{ env.semVer }}.symbols.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source "https://api.nuget.org/v3/index.json" -SkipDuplicate
+        run: nuget push **/Serilog.Sinks.Console.Themes.${{ env.semVer }}.symbols.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source "https://api.nuget.org/v3/index.json" -SkipDuplicate
