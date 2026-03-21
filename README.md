@@ -216,12 +216,18 @@ public sealed class MyThemeTemplate : DarkThemeTemplate
 }
 ```
 
-in appsettings.json
+Configuration cannot call `ConsoleThemes.UseTheme<MyThemeTemplate>()` from JSON. Expose the result as a **static property** (or field) on a type in **your** assembly, then reference it with `TypeFullName::MemberName, AssemblyName` (same pattern as the **Custom template** section above).
+
+Example if you declared `public static ConsoleTheme FromTemplate { get; } = ConsoleThemes.UseTheme<MyThemeTemplate>();` on `MyApp.Logging.LoggingThemes`:
 
 ```json
 {
   "Serilog": {
-    "Using": [ "Serilog.Sinks.Console" ],
+    "Using": [
+      "Serilog.Sinks.Console",
+      "Serilog.Sinks.Console.Themes",
+      "MyApp"
+    ],
     "MinimumLevel": {
       "Default": "Information"
     },
@@ -230,7 +236,7 @@ in appsettings.json
         "Name": "Console",
         "Args": {
           "restrictedToMinimumLevel": "Verbose",
-          "theme": "ConsoleThemes.UseTheme<MyThemeTemplate>(), Serilog.Sinks.Console.Themes",
+          "theme": "MyApp.Logging.LoggingThemes::FromTemplate, MyApp",
           "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
         }
       }
