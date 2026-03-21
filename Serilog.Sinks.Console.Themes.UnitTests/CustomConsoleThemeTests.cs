@@ -1,13 +1,13 @@
-﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
+namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
 internal sealed class CustomConsoleThemeTests
 {
     [Test]
-    public void DarkTheme_and_LightTheme_are_ansi_themes_with_full_style_map()
+    public void DarkTheme_and_LightTheme_are_console_themes_with_full_style_map()
     {
-        CustomConsoleTheme.DarkTheme.Should().BeOfType<AnsiConsoleTheme>();
-        CustomConsoleTheme.LightTheme.Should().BeOfType<AnsiConsoleTheme>();
+        CustomConsoleTheme.DarkTheme.Should().BeAssignableTo<ConsoleTheme>();
+        CustomConsoleTheme.LightTheme.Should().BeAssignableTo<ConsoleTheme>();
 
         // ConsoleThemeStyle.Object is obsolete and shares its underlying value with Scalar, so the theme dictionary has one entry per distinct value.
         var expected = Enum.GetValues<ConsoleThemeStyle>().Cast<int>().Distinct().Count();

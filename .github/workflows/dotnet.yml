@@ -67,7 +67,7 @@ jobs:
           -p:InformationalVersion="${GitVersion_InformationalVersion}" \
           -p:Company="Denis Peshkov" \
           -p:Product="Serilog.Sinks.Console.Themes" \
-          -p:Description="A small companion library for Serilog.Sinks.Console that defines a **24-bit ANSI** (`38;2` / `48;2`) console theme. Log output uses a fixed palette based on `System.Drawing.KnownColor` so you can tune colors in one place without hand-editing escape sequences." \
+          -p:Description="A small companion library for Serilog.Sinks.Console with 24-bit true-color console themes (`38;2` / `48;2`). Palettes use `System.Drawing.KnownColor`; extend via `BaseTheme` and `ThemeStyle`." \
           -p:RepositoryUrl="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes.git" \
           -p:RepositoryType=git \
           -p:CLSCompliant=true \

@@ -1,14 +1,22 @@
-﻿using System;
-using System.Linq;
-using System.Diagnostics;
-using Serilog;
-using Serilog.Sinks.Console.Themes;
-using Serilog.Context;
-
 var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "dark";
-var theme = themeArg.Equals("light", StringComparison.OrdinalIgnoreCase)
-    ? CustomConsoleTheme.LightTheme
-    : CustomConsoleTheme.DarkTheme;
+
+ConsoleTheme theme;
+string themeLabel;
+if (themeArg.Equals("light", StringComparison.OrdinalIgnoreCase))
+{
+    theme = CustomConsoleTheme.LightTheme;
+    themeLabel = "LightTheme";
+}
+else if (themeArg.Equals("dark", StringComparison.OrdinalIgnoreCase))
+{
+    theme = CustomConsoleTheme.DarkTheme;
+    themeLabel = "DarkTheme";
+}
+else
+{
+    theme = ConsoleThemes.UseTheme<MyTheme>();
+    themeLabel = "MyThemeTemplate (custom)";
+}
 
 const string outputTemplate =
     "{Timestamp:HH:mm:ss.fff} [{Level,-11}] {SourceContext:l}: {Message:lj}{NewLine}{Exception}";
@@ -63,8 +71,8 @@ using (LogContext.PushProperty("DemoRunId", Guid.NewGuid().ToString("N")[..8]))
     }
 
     Log.Information(
-        "Структурированный вывод завершён. Тема: {Theme}. Для скриншота: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light",
-        themeArg.Equals("light", StringComparison.OrdinalIgnoreCase) ? "LightTheme" : "DarkTheme");
+        "Структурированный вывод завершён. Тема: {Theme}. Запуск: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light|custom",
+        themeLabel);
 }
 
 Log.CloseAndFlush();
