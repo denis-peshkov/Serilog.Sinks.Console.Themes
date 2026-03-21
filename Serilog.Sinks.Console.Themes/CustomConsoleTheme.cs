@@ -1,9 +1,9 @@
 namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>
-/// Custom true-color ANSI palette for <see cref="Console.ConsoleSink"/>.
+/// Custom true-color ANSI palette for Serilog's console sink (<c>WriteTo.Console(theme: ...)</c>).
 /// Edit <see cref="DarkColors"/> using <see cref="KnownColor"/> or map from <see cref="ConsoleColor"/> via <see cref="TrueColor"/> overloads.
-/// Configuration: <c>PwC.TaxReporting.Api.Common.Logging.CustomSerilogConsoleTheme::Development, PwC.TaxReporting.Api</c>.
+/// With Serilog.Settings.Configuration, set <c>theme</c> to <c>Serilog.Sinks.Console.Themes.CustomConsoleTheme::DarkTheme, Serilog.Sinks.Console.Themes</c>.
 /// </summary>
 /// <remarks>
 /// Prefer static <see cref="KnownColor"/> entries (not system UI colors like <see cref="KnownColor.ActiveCaption"/>), which are stable across platforms.

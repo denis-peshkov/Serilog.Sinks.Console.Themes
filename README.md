@@ -13,7 +13,7 @@ Prefer **static web colors** from `KnownColor` (for example `GhostWhite`, `Cadet
 
 ## Install NuGet package
 
-Install the package _Serilog.Sinks.Console.Themes_ [NuGet package](https://www.nuget.org/packages/Serilog.Sinks.Console.Themes/) into your ASP.NET Core project:
+Install the _Serilog.Sinks.Console.Themes_ [NuGet package](https://www.nuget.org/packages/Serilog.Sinks.Console.Themes/) into your .NET project:
 
 ```powershell
 Install-Package Serilog.Sinks.Console.Themes
@@ -48,7 +48,7 @@ Reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilo
 
 If you use central package management (`Directory.Packages.props`), declare the version there instead of on the reference.
 
-`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName` (for example the existing `CustomConsoleTheme::Development, Serilog.Sinks.Console.Themes` pattern).
+`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`, for example `Serilog.Sinks.Console.Themes.CustomConsoleTheme::DarkTheme, Serilog.Sinks.Console.Themes`.
 
 ### This library (`CustomConsoleTheme.DarkTheme`)
 

@@ -12,12 +12,12 @@
     <repository type="git" url="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes" />
     <readme>docs\README.md</readme>
     <releaseNotes>
-      See https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/blob/main/ReleaseNotes.md
+      initial version
     </releaseNotes>
     <description>
       A companion library for Serilog.Sinks.Console with a 24-bit ANSI (true-color) console theme built from System.Drawing.KnownColor values, plus helpers to map colors to ANSI escape sequences.
 
-      Includes CustomSerilogConsoleTheme.DarkTheme and TrueColor for foreground, background, and bold styling.
+      Includes CustomConsoleTheme.DarkTheme (namespace Serilog.Sinks.Console.Themes) and TrueColor for foreground, background, and bold styling.
     </description>
     <tags>serilog logging console ansi theme truecolor serilog-sinks-console dotnet csharp</tags>
     <dependencies>
