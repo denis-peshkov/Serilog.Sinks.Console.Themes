@@ -66,7 +66,7 @@ jobs:
           -p:InformationalVersion="${GitVersion_InformationalVersion}" \
           -p:Company="Denis Peshkov" \
           -p:Product="Serilog.Sinks.Console.Themes" \
-          -p:Description="A .NET library providing unified error handling for ASP.NET Core applications. The package implements middleware that catches exceptions and transforms them into standardized JSON responses with proper HTTP status codes." \
+          -p:Description="A small companion library for Serilog.Sinks.Console that defines a **24-bit ANSI** (`38;2` / `48;2`) console theme. Log output uses a fixed palette based on `System.Drawing.KnownColor` so you can tune colors in one place without hand-editing escape sequences." \
           -p:RepositoryUrl="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes.git" \
           -p:RepositoryType=git \
           -p:CLSCompliant=true \
