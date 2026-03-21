@@ -1,4 +1,4 @@
-namespace Serilog.Sinks.Console.Themes;
+﻿namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>Maps <see cref="KnownColor"/> / <see cref="ConsoleColor"/> to <c>38;2</c> / <c>48;2</c> foreground/background escape fragments.</summary>
 public static class TrueColor

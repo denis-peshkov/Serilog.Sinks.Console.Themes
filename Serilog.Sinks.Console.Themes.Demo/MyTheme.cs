@@ -1,4 +1,4 @@
-namespace Serilog.Sinks.Console.Themes.Demo;
+﻿namespace Serilog.Sinks.Console.Themes.Demo;
 
 /// <summary>Sample custom template: extends <see cref="DarkTheme"/> and overrides a few styles with <see cref="ThemeStyle"/>.</summary>
 public sealed class MyTheme : DarkTheme

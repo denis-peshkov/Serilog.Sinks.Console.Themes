@@ -1,4 +1,4 @@
-var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "dark";
+﻿var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "dark";
 
 ConsoleTheme theme;
 string themeLabel;

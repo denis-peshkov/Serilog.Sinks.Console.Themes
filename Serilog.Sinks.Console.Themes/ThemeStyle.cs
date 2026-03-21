@@ -1,4 +1,4 @@
-namespace Serilog.Sinks.Console.Themes;
+﻿namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>Fluent styling for <see cref="BaseTheme"/> templates: foreground, background, and SGR modes.</summary>
 public static class ThemeStyle

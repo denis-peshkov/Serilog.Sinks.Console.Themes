@@ -1,4 +1,4 @@
-// ReSharper disable CheckNamespace
+﻿// ReSharper disable CheckNamespace
 namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>Light-background theme; uses <see cref="CustomConsoleTheme.LightColors"/>.</summary>

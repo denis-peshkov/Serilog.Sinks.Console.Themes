@@ -1,4 +1,4 @@
-namespace Serilog.Sinks.Console.Themes;
+﻿namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>SGR display attributes combined with foreground/background sequences from <see cref="ThemeStyle"/>.</summary>
 public enum FormatTypeEnum

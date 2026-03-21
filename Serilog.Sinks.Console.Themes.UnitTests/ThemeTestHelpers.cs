@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Serilog.Sinks.Console.Themes.UnitTests;
 

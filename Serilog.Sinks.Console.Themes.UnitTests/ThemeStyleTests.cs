@@ -1,4 +1,4 @@
-namespace Serilog.Sinks.Console.Themes.UnitTests;
+﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
 internal sealed class ThemeStyleTests
