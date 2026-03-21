@@ -1,4 +1,4 @@
-# Serilog.Sinks.Console.Themes [![.NET](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml/badge.svg)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml)
+# Serilog.Sinks.Console.Themes [![Nuget](https://img.shields.io/nuget/v/Serilog.Sinks.Console.Themes.svg)](https://nuget.org/packages/Serilog.Sinks.Console.Themes/) [![Documentation](https://img.shields.io/badge/docs-wiki-yellow.svg)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/wiki)
 
 A small companion library for [Serilog.Sinks.Console](https://www.nuget.org/packages/Serilog.Sinks.Console/) that defines a **24-bit ANSI** (`38;2` / `48;2`) console theme. Log output uses a fixed palette based on `System.Drawing.KnownColor` so you can tune colors in one place without hand-editing escape sequences.
 
@@ -6,29 +6,31 @@ A small companion library for [Serilog.Sinks.Console](https://www.nuget.org/pack
 
 ## Features
 
-- **`CustomSerilogConsoleTheme.DarkTheme`** — an `AnsiConsoleTheme` wired for text, property names, scalars, and log levels (including distinct error/fatal styling).
+- **`CustomConsoleTheme.DarkTheme`** — an `AnsiConsoleTheme` wired for text, property names, scalars, and log levels (including distinct error/fatal styling).
 - **`TrueColor`** — helpers that map `KnownColor` or `ConsoleColor` to foreground/background ANSI fragments, plus bold combinations for emphasis.
 
 Prefer **static web colors** from `KnownColor` (for example `GhostWhite`, `CadetBlue`). System UI colors (such as `ActiveCaption`) are rejected by `TrueColor` because they are not portable.
 
-## Install
+## Install NuGet package
 
-When the package is published to NuGet:
+Install the package _Serilog.Sinks.Console.Themes_ [NuGet package](https://www.nuget.org/packages/Serilog.Sinks.Console.Themes/) into your ASP.NET Core project:
 
+```powershell
+Install-Package Serilog.Sinks.Console.Themes
+```
+or
 ```bash
 dotnet add package Serilog.Sinks.Console.Themes
 ```
-
-To consume this repository directly, add a project reference to `Serilog.Sinks.Console.Themes/Serilog.Sinks.Console.Themes.csproj`.
 
 ## Quick start
 
 ```csharp
 using Serilog;
-using Serilog.Sinks.Console.Themes.Logging;
+using Serilog.Sinks.Console.Themes;
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console(theme: CustomSerilogConsoleTheme.DarkTheme)
+    .WriteTo.Console(theme: CustomConsoleTheme.DarkTheme)
     .CreateLogger();
 
 Log.Information("Hello, themed console");
@@ -46,9 +48,9 @@ Reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilo
 
 If you use central package management (`Directory.Packages.props`), declare the version there instead of on the reference.
 
-`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName` (for example the older `CustomSerilogConsoleTheme::Development, PwC.TaxReporting.Api` pattern).
+`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName` (for example the existing `CustomConsoleTheme::Development, Serilog.Sinks.Console.Themes` pattern).
 
-### This library (`CustomSerilogConsoleTheme.DarkTheme`)
+### This library (`CustomConsoleTheme.DarkTheme`)
 
 List the theme assembly in `Using` so configuration can load the type:
 
@@ -107,7 +109,7 @@ Other static members on `AnsiConsoleTheme` (for example `Code`, `Grayscale`, `Li
 
 ## Customizing colors
 
-Adjust the `KnownColor` constants in `CustomSerilogConsoleTheme.DarkColors`. `DarkTheme` is built once from those values via `TrueColor.Foreground`, `TrueColor.Background`, and `TrueColor.BoldForegroundBackground` for fatal-level lines.
+Adjust the `KnownColor` constants in `CustomConsoleTheme.DarkColors`. `DarkTheme` is built once from those values via `TrueColor.Foreground`, `TrueColor.Background`, and `TrueColor.BoldForegroundBackground` for fatal-level lines.
 
 ## Terminal support
 
