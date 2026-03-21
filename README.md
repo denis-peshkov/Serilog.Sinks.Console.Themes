@@ -58,11 +58,11 @@ The captures below were taken with those commands in a terminal that supports **
 
 **`CustomConsoleTheme.DarkTheme`** — tuned for dark terminal backgrounds:
 
-![img-dark.png](img-dark.png)
+![DarkTheme console sample](https://raw.githubusercontent.com/denis-peshkov/Serilog.Sinks.Console.Themes/master/img-dark.png)
 
 **`CustomConsoleTheme.LightTheme`** — tuned for light terminal backgrounds (same sample as above):
 
-![img-light.png](img-light.png)
+![LightTheme console sample](https://raw.githubusercontent.com/denis-peshkov/Serilog.Sinks.Console.Themes/master/img-light.png)
 
 You can combine a theme with your own `outputTemplate` as usual for the console sink.
 
@@ -213,6 +213,29 @@ public sealed class MyThemeTemplate : DarkThemeTemplate
 
     protected override string LevelError =>
         ThemeStyle.Bold().Italic().Strikethrough().Foreground(Color.Red);
+}
+```
+
+in appsettings.json
+
+```json
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console" ],
+    "MinimumLevel": {
+      "Default": "Information"
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "restrictedToMinimumLevel": "Verbose",
+          "theme": "ConsoleThemes.UseTheme<MyThemeTemplate>(), Serilog.Sinks.Console.Themes",
+          "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+        }
+      }
+    ]
+  }
 }
 ```
 
