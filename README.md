@@ -50,7 +50,7 @@ dotnet run --project Serilog.Sinks.Console.Themes.Demo -- light
 dotnet run --project Serilog.Sinks.Console.Themes.Demo -- custom
 ```
 
-`custom` runs the sample **`MyThemeTemplate`** (`ConsoleThemes.UseTheme<MyThemeTemplate>()`) from the Demo project.
+`custom` runs the sample **`MyTheme`** class (`ConsoleThemes.UseTheme<MyTheme>()`) from the Demo project.
 
 #### Screenshots
 
@@ -218,8 +218,19 @@ public sealed class MyThemeTemplate : DarkThemeTemplate
 
 Configuration cannot call `ConsoleThemes.UseTheme<MyThemeTemplate>()` from JSON. Expose the result as a **static property** (or field) on a type in **your** assembly, then reference it with `TypeFullName::MemberName, AssemblyName` (same pattern as the **Custom template** section above).
 
-Example if you declared `public static ConsoleTheme FromTemplate { get; } = ConsoleThemes.UseTheme<MyThemeTemplate>();` on `MyApp.Logging.LoggingThemes`:
+### Example
 
+In your application, declare for example:
+
+```csharp
+public static class LoggingThemes
+{
+    public static ConsoleTheme FromTemplate { get; } =
+        ConsoleThemes.UseTheme<MyThemeTemplate>();
+}
+```
+
+In `appsettings.json`:
 ```json
 {
   "Serilog": {
@@ -236,7 +247,7 @@ Example if you declared `public static ConsoleTheme FromTemplate { get; } = Cons
         "Name": "Console",
         "Args": {
           "restrictedToMinimumLevel": "Verbose",
-          "theme": "MyApp.Logging.LoggingThemes::FromTemplate, MyApp",
+          "theme": "MyApp.LoggingThemes::FromTemplate, MyApp",
           "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
         }
       }
@@ -244,6 +255,8 @@ Example if you declared `public static ConsoleTheme FromTemplate { get; } = Cons
   }
 }
 ```
+
+Also add the `MyApp` assembly to the `Using` array.
 
 ## Customizing built-in palettes
 
