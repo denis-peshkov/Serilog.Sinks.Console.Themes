@@ -48,9 +48,12 @@ The **`Serilog.Sinks.Console.Themes.Demo`** sample logs every level plus structu
 dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark
 dotnet run --project Serilog.Sinks.Console.Themes.Demo -- light
 dotnet run --project Serilog.Sinks.Console.Themes.Demo -- custom
+dotnet run --project Serilog.Sinks.Console.Themes.Demo -- sixteen
+dotnet run --project Serilog.Sinks.Console.Themes.Demo -- code
+dotnet run --project Serilog.Sinks.Console.Themes.Demo --
 ```
 
-`custom` runs the sample **`MyTheme`** class (`ConsoleThemes.UseTheme<MyTheme>()`) from the Demo project.
+`custom` runs the sample **`MyTheme`** class (`ConsoleThemes.UseTheme<MyTheme>()`) from the Demo project. **`sixteen`** and **`code`** use built-in themes from **Serilog** (`AnsiConsoleTheme.Sixteen` and `AnsiConsoleTheme.Code` in assembly `Serilog.Sinks.Console`) for side-by-side comparison with this library’s themes.
 
 #### Screenshots
 

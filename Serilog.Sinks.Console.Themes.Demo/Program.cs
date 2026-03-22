@@ -1,4 +1,4 @@
-var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "dark";
+var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "";
 
 ConsoleTheme theme;
 string themeLabel;
@@ -17,10 +17,20 @@ else if (themeArg.Equals("custom", StringComparison.OrdinalIgnoreCase))
     theme = ConsoleThemes.UseTheme<MyTheme>();
     themeLabel = "MyTheme (custom)";
 }
-else
+else if (themeArg.Equals("sixteen", StringComparison.OrdinalIgnoreCase))
 {
     theme = AnsiConsoleTheme.Sixteen;
     themeLabel = "AnsiConsoleTheme.Sixteen";
+}
+else if (themeArg.Equals("code", StringComparison.OrdinalIgnoreCase))
+{
+    theme = AnsiConsoleTheme.Code;
+    themeLabel = "AnsiConsoleTheme.Code";
+}
+else
+{
+    theme = ConsoleTheme.None;
+    themeLabel = "ConsoleTheme.None";
 }
 
 const string outputTemplate =
@@ -76,7 +86,7 @@ using (LogContext.PushProperty("DemoRunId", Guid.NewGuid().ToString("N")[..8]))
     }
 
     Log.Information(
-        "Structured output complete. Theme: {Theme}. Run: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light|custom|sixteen",
+        "Structured output complete. Theme: {Theme}. Run: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light|custom|sixteen|code",
         themeLabel);
 }
 
