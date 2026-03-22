@@ -1,4 +1,5 @@
 namespace Serilog.Sinks.Console.Themes;
+
 /// <summary>Maps Serilog console sink style keys (<see cref="ConsoleThemeStyle"/>) to
 /// <see cref="ExpressionTemplate"/> style keys (<see cref="TemplateThemeStyle"/>).</summary>
 public static class ThemeStyleConverter
