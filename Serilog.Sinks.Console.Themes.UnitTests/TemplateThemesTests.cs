@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
