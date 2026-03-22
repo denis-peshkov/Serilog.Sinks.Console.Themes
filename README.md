@@ -204,15 +204,17 @@ Fluent styling example (similar to **Serilog.Sinks.Console.LogThemes**):
 ```csharp
 public sealed class MyThemeTemplate : DarkThemeTemplate
 {
-    protected override string Text => ThemeStyle.Foreground(Color.Magenta);
+    protected override string Text
+        => ThemeStyle.Foreground(Color.Magenta);
 
-    protected override string LevelDebug =>
-        ThemeStyle.Background(Color.CadetBlue).FormatType(FormatTypeEnum.BoldMode);
+    protected override string LevelDebug
+        => ThemeStyle.Background(Color.CadetBlue).FormatType(FormatTypeEnum.BoldMode);
 
-    protected override string Name => ThemeStyle.Style(Color.Salmon, Color.Azure);
+    protected override string Name
+        => ThemeStyle.Style(Color.Salmon, Color.Azure);
 
-    protected override string LevelError =>
-        ThemeStyle.Bold().Italic().Strikethrough().Foreground(Color.Red);
+    protected override string LevelError
+        => ThemeStyle.Bold().Italic().Strikethrough().Foreground(Color.Red);
 }
 ```
 
@@ -224,8 +226,6 @@ Example if you declared `public static ConsoleTheme FromTemplate { get; } = Cons
 {
   "Serilog": {
     "Using": [
-      "Serilog.Sinks.Console",
-      "Serilog.Sinks.Console.Themes",
       "MyApp"
     ],
     "MinimumLevel": {
