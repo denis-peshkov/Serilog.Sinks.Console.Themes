@@ -7,8 +7,8 @@ using Serilog.Context;
 
 var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "dark";
 var theme = themeArg.Equals("light", StringComparison.OrdinalIgnoreCase)
-    ? CustomConsoleTheme.LightTheme
-    : CustomConsoleTheme.DarkTheme;
+    ? CustomConsoleTheme.Light
+    : CustomConsoleTheme.Dark;
 
 const string outputTemplate =
     "{Timestamp:HH:mm:ss.fff} [{Level,-11}] {SourceContext:l}: {Message:lj}{NewLine}{Exception}";

@@ -60,7 +60,7 @@ public static class CustomConsoleTheme
     }
 
     /// <summary>Built from <see cref="DarkColors"/> via <see cref="TrueColor"/>.</summary>
-    public static ConsoleTheme DarkTheme { get; } = new AnsiConsoleTheme(
+    public static ConsoleTheme Dark { get; } = new AnsiConsoleTheme(
         new Dictionary<ConsoleThemeStyle, string>
         {
             [ConsoleThemeStyle.Text] = TrueColor.Foreground(DarkColors.Text),
@@ -85,7 +85,7 @@ public static class CustomConsoleTheme
         });
 
     /// <summary>Built from <see cref="LightColors"/> via <see cref="TrueColor"/>.</summary>
-    public static ConsoleTheme LightTheme { get; } = new AnsiConsoleTheme(
+    public static ConsoleTheme Light { get; } = new AnsiConsoleTheme(
         new Dictionary<ConsoleThemeStyle, string>
         {
             [ConsoleThemeStyle.Text] = TrueColor.Foreground(LightColors.Text),
