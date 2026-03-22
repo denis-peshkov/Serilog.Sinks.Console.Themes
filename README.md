@@ -44,6 +44,8 @@ Use `ConsoleThemes.Light` (or `CustomConsoleTheme.Light`) for a light background
 
 ### `ExpressionTemplate` and `TemplateTheme`
 
+The **`ExpressionTemplate`** type, **`TemplateTheme`**, and the **`Serilog.Templates`** APIs live in the **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)** package — this repo **extends** that stack with **24-bit true-color** `TemplateTheme` presets (`TemplateThemes`, `CustomConsoleTheme.DarkTemplateTheme` / `LightTemplateTheme`, `ThemeStyleConverter`, and template helpers built on **`BaseTheme`**).
+
 When you format the console with **`Serilog.Expressions`** instead of `outputTemplate`, pass a **`TemplateTheme`** into **`ExpressionTemplate`** (or `TryParse`). This library exposes the same palettes as **`ConsoleThemes`**:
 
 ```csharp
