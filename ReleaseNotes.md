@@ -3,3 +3,6 @@ https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/releases
 
 ## 1.0.0 - 21 Mar 2024
 - Initial version
+
+## 1.2.0 - 22 Mar 2024
+- Fix name convention
