@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Diagnostics;
 using Serilog;
@@ -64,7 +64,7 @@ using (LogContext.PushProperty("DemoRunId", Guid.NewGuid().ToString("N")[..8]))
 
     Log.Information(
         "Структурированный вывод завершён. Тема: {Theme}. Для скриншота: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light",
-        themeArg.Equals("light", StringComparison.OrdinalIgnoreCase) ? "LightTheme" : "DarkTheme");
+        themeArg.Equals("light", StringComparison.OrdinalIgnoreCase) ? "Light" : "Dark");
 }
 
 Log.CloseAndFlush();

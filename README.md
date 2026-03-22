@@ -6,8 +6,8 @@ A small companion library for [Serilog.Sinks.Console](https://www.nuget.org/pack
 
 ## Features
 
-- **`CustomConsoleTheme.DarkTheme`** — an `AnsiConsoleTheme` wired for text, property names, scalars, and log levels (including distinct error/fatal styling).
-- **`CustomConsoleTheme.LightTheme`** — the same style map for light terminal backgrounds (tweak colors in `LightColors`).
+- **`CustomConsoleTheme.Dark`** — an `AnsiConsoleTheme` wired for text, property names, scalars, and log levels (including distinct error/fatal styling).
+- **`CustomConsoleTheme.Light`** — the same style map for light terminal backgrounds (tweak colors in `LightColors`).
 - **`TrueColor`** — helpers that map `KnownColor` or `ConsoleColor` to foreground/background ANSI fragments, plus bold combinations for emphasis.
 
 Prefer **static web colors** from `KnownColor` (for example `GhostWhite`, `CadetBlue`). System UI colors (such as `ActiveCaption`) are rejected by `TrueColor` because they are not portable.
@@ -31,13 +31,13 @@ using Serilog;
 using Serilog.Sinks.Console.Themes;
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console(theme: CustomConsoleTheme.DarkTheme)
+    .WriteTo.Console(theme: CustomConsoleTheme.Dark)
     .CreateLogger();
 
 Log.Information("Hello, themed console");
 ```
 
-Use `CustomConsoleTheme.LightTheme` for a light background.
+Use `CustomConsoleTheme.Light` for a light background.
 
 ### Preview (screenshot helper)
 
@@ -52,11 +52,11 @@ dotnet run --project Serilog.Sinks.Console.Themes.Demo -- light
 
 The captures below were taken with those commands in a terminal that supports **24-bit ANSI** color. The demo prints every log level (Verbose through Fatal), structured scalars (string, number, boolean, enum, GUID, URI, date/time), `null` properties, a destructured object (`{@...}`), a line with a custom `SourceContext`, and an error with inner exception and stack trace. That combination shows how each theme tints the timestamp/level band, message text, property names, scalar kinds, and error vs. fatal highlighting.
 
-**`CustomConsoleTheme.DarkTheme`** — tuned for dark terminal backgrounds:
+**`CustomConsoleTheme.Dark`** — tuned for dark terminal backgrounds:
 
 ![img-dark.png](img-dark.png)
 
-**`CustomConsoleTheme.LightTheme`** — tuned for light terminal backgrounds (same sample as above):
+**`CustomConsoleTheme.Light`** — tuned for light terminal backgrounds (same sample as above):
 
 ![img-light.png](img-light.png)
 
@@ -72,9 +72,9 @@ Reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilo
 
 If you use central package management (`Directory.Packages.props`), declare the version there instead of on the reference.
 
-`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`, for example `Serilog.Sinks.Console.Themes.CustomConsoleTheme::DarkTheme, Serilog.Sinks.Console.Themes` or `::LightTheme`.
+`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`, for example `Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes` or `::Light`.
 
-### This library (`CustomConsoleTheme.DarkTheme`)
+### This library (`CustomConsoleTheme.Dark`)
 
 List the theme assembly in `Using` so configuration can load the type:
 
@@ -93,7 +93,7 @@ List the theme assembly in `Using` so configuration can load the type:
         "Name": "Console",
         "Args": {
           "restrictedToMinimumLevel": "Verbose",
-          "theme": "Serilog.Sinks.Console.Themes.CustomConsoleTheme::DarkTheme, Serilog.Sinks.Console.Themes",
+          "theme": "Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes",
           "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz} CorrelationId:[{CorrelationId}] [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}"
         }
       }

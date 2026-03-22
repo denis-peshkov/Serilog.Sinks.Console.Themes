@@ -1,10 +1,10 @@
-﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
+namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
 internal sealed class CustomConsoleThemeTests
 {
     [Test]
-    public void DarkTheme_and_LightTheme_are_ansi_themes_with_full_style_map()
+    public void Dark_and_Light_are_ansi_themes_with_full_style_map()
     {
         CustomConsoleTheme.Dark.Should().BeOfType<AnsiConsoleTheme>();
         CustomConsoleTheme.Light.Should().BeOfType<AnsiConsoleTheme>();
@@ -16,7 +16,7 @@ internal sealed class CustomConsoleThemeTests
     }
 
     [Test]
-    public void DarkTheme_and_LightTheme_define_distinct_level_information_colors()
+    public void Dark_and_Light_define_distinct_level_information_colors()
     {
         var dark = GetStyle(CustomConsoleTheme.Dark, ConsoleThemeStyle.LevelInformation);
         var light = GetStyle(CustomConsoleTheme.Light, ConsoleThemeStyle.LevelInformation);
