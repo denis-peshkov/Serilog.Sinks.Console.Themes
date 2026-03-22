@@ -1,6 +1,8 @@
 # Release Notes - Serilog.Sinks.Console.Themes
 https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/releases
 
+---
+
 ## Unreleased - 22 Mar 2024
 
 ### Theming API
