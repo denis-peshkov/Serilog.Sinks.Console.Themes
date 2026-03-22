@@ -1,20 +1,20 @@
-var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "";
+﻿var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "";
 
 ConsoleTheme theme;
 string themeLabel;
 if (themeArg.Equals("light", StringComparison.OrdinalIgnoreCase))
 {
-    theme = CustomConsoleTheme.LightTheme;
-    themeLabel = "LightTheme";
+    theme = CustomConsoleTheme.Light;
+    themeLabel = "Light";
 }
 else if (themeArg.Equals("dark", StringComparison.OrdinalIgnoreCase))
 {
     theme = ConsoleThemes.Dark;
-    themeLabel = "DarkTheme";
+    themeLabel = "Dark";
 }
 else if (themeArg.Equals("custom", StringComparison.OrdinalIgnoreCase))
 {
-    theme = ConsoleThemes.UseTheme<MyTheme>();
+    theme = ConsoleThemes.UseTheme<MyBrandTheme>();
     themeLabel = "MyTheme (custom)";
 }
 else if (themeArg.Equals("sixteen", StringComparison.OrdinalIgnoreCase))

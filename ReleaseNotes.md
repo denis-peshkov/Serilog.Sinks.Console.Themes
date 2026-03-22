@@ -1,32 +1,37 @@
-# Release Notes - Serilog.Sinks.Console.Themes
-https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/releases
+# Release notes
+
+[GitHub Releases](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/releases)
 
 ---
 
-## Unreleased - 22 Mar 2024
+## 2.0.0 - 23 Mar 2024
 
 ### Theming API
 
-- **`BaseTheme`** — abstract template: one virtual string per `ConsoleThemeStyle`, exposed via **`ToStyleDictionary()`** for building an `AnsiConsoleTheme`.
-- **`DarkTheme`** / **`LightTheme`** — concrete templates driven by **`CustomConsoleTheme.DarkColors`** / **`LightColors`** and **`ThemeStyle`** / **`TrueColor`** (including error/fatal foreground+background and bold fatal).
-- **`ConsoleThemes`** — **`Dark`** and **`Light`** singleton themes; **`UseTheme<T>()`** where `T : BaseTheme, new()` for custom templates.
-- **`CustomConsoleTheme.DarkTheme`** / **`LightTheme`** — convenience aliases aligned with the same palettes as **`ConsoleThemes.Dark`** / **`Light`**.
-- **`ThemeStyle`** — fluent helpers for foreground/background (`KnownColor`, `ConsoleColor`, `Color`), combined **`Style(...)`**, and SGR helpers (**`Bold()`**, **`Italic()`**, **`Underline()`**, **`Strikethrough()`**, **`FormatType(FormatTypeEnum)`**).
-- **`FormatTypeEnum`** — named SGR modes (bold, dim, italic, underline, blink, inverse, hidden, strikethrough) plus extension **`string.FormatType(...)`** for chaining on theme fragments.
-- **`TrueColor`** — **`Foreground(Color)`** / **`Background(Color)`** for arbitrary RGB; existing **`KnownColor`** / **`ConsoleColor`** mapping; **`BoldForegroundBackground`** overloads; rejects non-portable system **`KnownColor`** values.
+- **`BaseTheme`** — abstract template: one string per `ConsoleThemeStyle`, materialized via **`ToStyleDictionary()`** into an `AnsiConsoleTheme`.
+- **`DarkTheme`** / **`LightTheme`** — concrete templates using **`CustomConsoleTheme.DarkColors`** / **`LightColors`** with **`ThemeStyle`** and **`TrueColor`**.
+- **`ConsoleThemes`** — cached **`Dark`** / **`Light`**; **`UseTheme<T>()`** for `T : BaseTheme, new()`.
+- **`CustomConsoleTheme.Dark`** / **`Light`** — same instances as **`ConsoleThemes.Dark`** / **`Light`** (handy aliases for `WriteTo.Console` and **`Serilog.Settings.Configuration`** `::Dark` / `::Light`).
+- **`ThemeStyle`**, **`FormatTypeEnum`**, **`TrueColor`** — fluent styling and RGB / `KnownColor` / `ConsoleColor` SGR fragments.
 
 ### Sample and tests
 
-- **`Serilog.Sinks.Console.Themes.Demo`** — run with **`dark`**, **`light`**, **`custom`**, **`sixteen`**, or **`code`**; **`custom`** uses **`ConsoleThemes.UseTheme<MyTheme>()`** with sample **`MyTheme`** subclassing **`DarkTheme`**; **`sixteen`** / **`code`** use Serilog’s built-in **`AnsiConsoleTheme.Sixteen`** / **`AnsiConsoleTheme.Code`**; no token after **`--`** or an unrecognized token uses **`ConsoleTheme.None`** (no ANSI theme).
-- **`Serilog.Sinks.Console.Themes.UnitTests`** — coverage for **`ConsoleThemes`**, **`ThemeStyle`** / **`FormatTypeEnum`**, **`TrueColor`**, **`CustomConsoleTheme`**, shared **`ThemeTestHelpers`**; assembly exposed via **`InternalsVisibleTo`**.
+- **`Serilog.Sinks.Console.Themes.Demo`** — **`dark`**, **`light`**, **`custom`**, **`sixteen`**, **`code`**, or **`--`** with no token / unknown token (**`ConsoleTheme.None`**).
+- **`Serilog.Sinks.Console.Themes.UnitTests`** — themes, **`ThemeStyle`**, **`TrueColor`**, helpers; **`InternalsVisibleTo`** where used.
 
 ### Documentation and packaging
 
-- **README** — extended quick start (`ConsoleThemes.Dark` / aliases), **`appsettings.json`** (`CustomConsoleTheme::DarkTheme` / **`LightTheme`**, **`ConsoleThemes::Dark`** / **`Light`**, pattern for **`UseTheme<T>()`** via a **static property** in the host app — not a method call in JSON), custom theme examples, screenshots (absolute **`raw.githubusercontent.com`** URLs for NuGet), contributing notes (**`slnx`**, **`dotnet test`**, UTF-8 BOM for `.cs`/`.csproj`, no BOM for **`.slnx`**).
-- **`config.nuspec`** — updated **description** / **releaseNotes**; **`img-dark.png`** / **`img-light.png`** included under package **`docs/`** with README.
+- **README** — `appsettings` theme string uses **`CustomConsoleTheme::Dark`** / **`::Light`** (replacing the old **`::DarkTheme`** / **`::LightTheme`** members); screenshots via **`raw.githubusercontent.com`**; contributing / **`slnx`** / encoding notes.
+- **`config.nuspec`** — description and packaged **`docs/`** assets (README + screenshots when listed in nuspec).
 
 ---
 
-## v1.0.0 - 21 Mar 2024
+## 1.1.0 - 22 Mar 2024
 
-- Initial version
+- Naming: preset themes exposed as **`CustomConsoleTheme.Dark`** / **`Light`** and **`ConsoleThemes.Dark`** / **`Light`** (aligned configuration strings **`::Dark`** / **`::Light`**).
+
+---
+
+## 1.0.0 - 21 Mar 2024
+
+- Initial version.

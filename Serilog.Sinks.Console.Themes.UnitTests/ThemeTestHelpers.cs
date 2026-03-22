@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace Serilog.Sinks.Console.Themes.UnitTests;
+﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 internal static class ThemeTestHelpers
 {

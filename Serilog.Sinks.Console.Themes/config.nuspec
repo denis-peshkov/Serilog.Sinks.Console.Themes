@@ -13,12 +13,12 @@
     <readme>docs\README.md</readme>
     <icon>icon.png</icon>
     <releaseNotes>
-      initial version
+      Add support for Serilog ExpressionTemplate and TemplateTheme
     </releaseNotes>
     <description>
       A companion library for Serilog.Sinks.Console with 24-bit true-color console themes built from System.Drawing.KnownColor, plus helpers for escape sequences.
 
-      Includes CustomConsoleTheme.DarkTheme/LightTheme, TemplateThemes / ExpressionTemplate TemplateTheme, ConsoleThemes factories, BaseTheme templates, ThemeStyle fluent helpers, and TrueColor for RGB fragments.
+      Includes CustomConsoleTheme.Dark/Light, ConsoleThemes factories, BaseTheme templates, ThemeStyle fluent helpers, and TrueColor for RGB fragments.
     </description>
     <tags>serilog logging console ansi theme truecolor serilog-sinks-console dotnet csharp</tags>
     <dependencies>

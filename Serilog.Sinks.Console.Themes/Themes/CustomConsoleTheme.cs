@@ -64,10 +64,10 @@ public static class CustomConsoleTheme
     }
 
     /// <summary>Dark palette (<see cref="ConsoleThemes.Dark"/>).</summary>
-    public static ConsoleTheme DarkTheme => ConsoleThemes.Dark;
+    public static ConsoleTheme Dark => ConsoleThemes.Dark;
 
     /// <summary>Light palette (<see cref="ConsoleThemes.Light"/>).</summary>
-    public static ConsoleTheme LightTheme => ConsoleThemes.Light;
+    public static ConsoleTheme Light => ConsoleThemes.Light;
 
     /// <summary>Dark palette for <see cref="Serilog.Templates.ExpressionTemplate"/> (<see cref="TemplateThemes.Dark"/>).</summary>
     public static TemplateTheme DarkTemplateTheme => TemplateThemes.Dark;
