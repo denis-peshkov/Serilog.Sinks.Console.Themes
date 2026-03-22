@@ -4,7 +4,7 @@ namespace Serilog.Sinks.Console.Themes;
 /// Custom true-color ANSI palette for Serilog's console sink (<c>WriteTo.Console(theme: ...)</c>).
 /// Edit <see cref="DarkColors"/> using <see cref="KnownColor"/> or map from <see cref="ConsoleColor"/> via <see cref="TrueColor"/> overloads.
 /// With Serilog.Settings.Configuration, set <c>theme</c> to
-/// <c>Serilog.Sinks.Console.Themes.CustomConsoleTheme::DarkTheme, Serilog.Sinks.Console.Themes</c> or <c>::LightTheme</c>.
+/// <c>Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes</c> or <c>::Light</c>.
 /// </summary>
 /// <remarks>
 /// Prefer static <see cref="KnownColor"/> entries (not system UI colors like <see cref="KnownColor.ActiveCaption"/>), which are stable across platforms.
@@ -60,7 +60,7 @@ public static class CustomConsoleTheme
     }
 
     /// <summary>Built from <see cref="DarkColors"/> via <see cref="TrueColor"/>.</summary>
-    public static ConsoleTheme DarkTheme { get; } = new AnsiConsoleTheme(
+    public static ConsoleTheme Dark { get; } = new AnsiConsoleTheme(
         new Dictionary<ConsoleThemeStyle, string>
         {
             [ConsoleThemeStyle.Text] = TrueColor.Foreground(DarkColors.Text),
@@ -85,7 +85,7 @@ public static class CustomConsoleTheme
         });
 
     /// <summary>Built from <see cref="LightColors"/> via <see cref="TrueColor"/>.</summary>
-    public static ConsoleTheme LightTheme { get; } = new AnsiConsoleTheme(
+    public static ConsoleTheme Light { get; } = new AnsiConsoleTheme(
         new Dictionary<ConsoleThemeStyle, string>
         {
             [ConsoleThemeStyle.Text] = TrueColor.Foreground(LightColors.Text),

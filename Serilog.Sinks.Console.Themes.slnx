@@ -8,6 +8,8 @@
     <File Path=".gitattributes" />
     <File Path=".gitignore" />
     <File Path="GitVersion.yml" />
+    <File Path="icon.png" />
+    <File Path="icon.svg" />
     <File Path="img-dark.png" />
     <File Path="img-light.png" />
     <File Path="LICENSE" />
