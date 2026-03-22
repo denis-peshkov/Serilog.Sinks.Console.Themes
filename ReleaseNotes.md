@@ -4,7 +4,7 @@
 
 ---
 
-## Unreleased
+## 2.0.0 - 23 Mar 2024
 
 ### Theming API
 
@@ -26,12 +26,12 @@
 
 ---
 
-## 1.1.0
+## 1.1.0 - 22 Mar 2024
 
 - Naming: preset themes exposed as **`CustomConsoleTheme.Dark`** / **`Light`** and **`ConsoleThemes.Dark`** / **`Light`** (aligned configuration strings **`::Dark`** / **`::Light`**).
 
 ---
 
-## 1.0.0
+## 1.0.0 - 21 Mar 2024
 
 - Initial version.
