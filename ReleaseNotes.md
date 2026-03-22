@@ -25,6 +25,10 @@ https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/releases
 - **README** — extended quick start (`ConsoleThemes.Dark` / aliases), **`appsettings.json`** (`CustomConsoleTheme::DarkTheme` / **`LightTheme`**, **`ConsoleThemes::Dark`** / **`Light`**, pattern for **`UseTheme<T>()`** via a **static property** in the host app — not a method call in JSON), custom theme examples, screenshots (absolute **`raw.githubusercontent.com`** URLs for NuGet), contributing notes (**`slnx`**, **`dotnet test`**, UTF-8 BOM for `.cs`/`.csproj`, no BOM for **`.slnx`**).
 - **`config.nuspec`** — updated **description** / **releaseNotes**; **`img-dark.png`** / **`img-light.png`** included under package **`docs/`** with README.
 
+
+## 1.1.0 - 22 Mar 2024
+- Fix name convention
+
 ---
 
 ## v1.0.0 - 21 Mar 2024
