@@ -1,9 +1,12 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
+using Serilog.Templates.Themes;
+
 namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>
 /// Known-color palettes for the built-in dark/light themes. Themes are built via
-/// <see cref="ConsoleThemes.Dark"/>, <see cref="ConsoleThemes.Light"/>, or <see cref="ConsoleThemes.UseTheme{T}"/>.
+/// <see cref="ConsoleThemes.Dark"/>, <see cref="ConsoleThemes.Light"/>, <see cref="ConsoleThemes.UseTheme{T}"/>,
+/// or <see cref="TemplateThemes"/> for <see cref="Serilog.Templates.ExpressionTemplate"/>.
 /// </summary>
 /// <remarks>
 /// Prefer static <see cref="KnownColor"/> entries (not OS-reserved names like <see cref="KnownColor.ActiveCaption"/>), which are stable across platforms.
@@ -65,4 +68,10 @@ public static class CustomConsoleTheme
 
     /// <summary>Light palette (<see cref="ConsoleThemes.Light"/>).</summary>
     public static ConsoleTheme LightTheme => ConsoleThemes.Light;
+
+    /// <summary>Dark palette for <see cref="Serilog.Templates.ExpressionTemplate"/> (<see cref="TemplateThemes.Dark"/>).</summary>
+    public static TemplateTheme DarkTemplateTheme => TemplateThemes.Dark;
+
+    /// <summary>Light palette for <see cref="Serilog.Templates.ExpressionTemplate"/> (<see cref="TemplateThemes.Light"/>).</summary>
+    public static TemplateTheme LightTemplateTheme => TemplateThemes.Light;
 }

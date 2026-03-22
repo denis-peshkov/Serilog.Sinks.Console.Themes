@@ -1,9 +1,13 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
+using Serilog.Templates;
+using Serilog.Templates.Themes;
+
 namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>
 /// Base type for console theme templates. Override any style, then use
-/// <see cref="ConsoleThemes.UseTheme{T}"/> to build a <see cref="ConsoleTheme"/> for <c>WriteTo.Console</c>.
+/// <see cref="ConsoleThemes.UseTheme{T}"/> for <see cref="ConsoleTheme"/> or
+/// <see cref="TemplateThemes.UseTheme{T}"/> / <see cref="ToTemplateTheme"/> for <see cref="ExpressionTemplate"/>.
 /// </summary>
 public abstract class BaseTheme
 {
@@ -59,4 +63,11 @@ public abstract class BaseTheme
         [ConsoleThemeStyle.LevelError] = LevelError,
         [ConsoleThemeStyle.LevelFatal] = LevelFatal,
     };
+
+    /// <summary>Same escape sequences as <see cref="ToStyleDictionary"/>, keyed for <see cref="ExpressionTemplate"/>.</summary>
+    public Dictionary<TemplateThemeStyle, string> ToTemplateStyleDictionary() =>
+        ThemeStyleConverter.ToTemplateStyles(ToStyleDictionary());
+
+    /// <summary>Builds a <see cref="TemplateTheme"/> for <c>new ExpressionTemplate(..., theme: ...)</c>.</summary>
+    public TemplateTheme ToTemplateTheme() => new(ToTemplateStyleDictionary());
 }

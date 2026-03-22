@@ -1,4 +1,4 @@
-﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
+namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
 internal sealed class CustomConsoleThemeTests
@@ -28,5 +28,12 @@ internal sealed class CustomConsoleThemeTests
     {
         ReferenceEquals(CustomConsoleTheme.DarkTheme, ConsoleThemes.Dark).Should().BeTrue();
         ReferenceEquals(CustomConsoleTheme.LightTheme, ConsoleThemes.Light).Should().BeTrue();
+    }
+
+    [Test]
+    public void CustomConsoleTheme_template_aliases_reference_same_instances_as_TemplateThemes()
+    {
+        ReferenceEquals(CustomConsoleTheme.DarkTemplateTheme, TemplateThemes.Dark).Should().BeTrue();
+        ReferenceEquals(CustomConsoleTheme.LightTemplateTheme, TemplateThemes.Light).Should().BeTrue();
     }
 }
