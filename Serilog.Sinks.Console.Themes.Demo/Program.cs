@@ -86,7 +86,7 @@ using (LogContext.PushProperty("DemoRunId", Guid.NewGuid().ToString("N")[..8]))
     }
 
     Log.Information(
-        "Structured output complete. Theme: {Theme}. Run: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light|custom|sixteen|code",
+        "Structured output complete. Theme: {Theme}. Run: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light|custom|sixteen|code (or `--` with no token / unknown token for ConsoleTheme.None)",
         themeLabel);
 }
 

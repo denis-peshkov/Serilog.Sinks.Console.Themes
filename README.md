@@ -53,6 +53,8 @@ dotnet run --project Serilog.Sinks.Console.Themes.Demo -- code
 dotnet run --project Serilog.Sinks.Console.Themes.Demo --
 ```
 
+The last line passes **no theme token** after `--` (same as an empty first argument). Together with **any unrecognized** token, that selects **`ConsoleTheme.None`** — plain console output without ANSI theme styling.
+
 `custom` runs the sample **`MyTheme`** class (`ConsoleThemes.UseTheme<MyTheme>()`) from the Demo project. **`sixteen`** and **`code`** use built-in themes from **Serilog** (`AnsiConsoleTheme.Sixteen` and `AnsiConsoleTheme.Code` in assembly `Serilog.Sinks.Console`) for side-by-side comparison with this library’s themes.
 
 #### Screenshots

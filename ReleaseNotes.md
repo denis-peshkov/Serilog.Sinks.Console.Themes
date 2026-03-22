@@ -17,7 +17,7 @@ https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/releases
 
 ### Sample and tests
 
-- **`Serilog.Sinks.Console.Themes.Demo`** — run with **`dark`**, **`light`**, or **`custom`**; **`custom`** uses **`ConsoleThemes.UseTheme<MyTheme>()`** with sample **`MyTheme`** subclassing **`DarkTheme`**.
+- **`Serilog.Sinks.Console.Themes.Demo`** — run with **`dark`**, **`light`**, **`custom`**, **`sixteen`**, or **`code`**; **`custom`** uses **`ConsoleThemes.UseTheme<MyTheme>()`** with sample **`MyTheme`** subclassing **`DarkTheme`**; **`sixteen`** / **`code`** use Serilog’s built-in **`AnsiConsoleTheme.Sixteen`** / **`AnsiConsoleTheme.Code`**; no token after **`--`** or an unrecognized token uses **`ConsoleTheme.None`** (no ANSI theme).
 - **`Serilog.Sinks.Console.Themes.UnitTests`** — coverage for **`ConsoleThemes`**, **`ThemeStyle`** / **`FormatTypeEnum`**, **`TrueColor`**, **`CustomConsoleTheme`**, shared **`ThemeTestHelpers`**; assembly exposed via **`InternalsVisibleTo`**.
 
 ### Documentation and packaging
