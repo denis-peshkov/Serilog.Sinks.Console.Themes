@@ -1,6 +1,4 @@
-// ReSharper disable CheckNamespace
-using Serilog.Templates;
-using Serilog.Templates.Themes;
+﻿// ReSharper disable CheckNamespace
 
 namespace Serilog.Sinks.Console.Themes;
 
