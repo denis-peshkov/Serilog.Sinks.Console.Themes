@@ -38,7 +38,7 @@ Log.Logger = new LoggerConfiguration()
 Log.Information("Hello, themed console");
 ```
 
-Use `ConsoleThemes.Light` (or `CustomConsoleTheme.LightTheme`) for a light background.
+Use `ConsoleThemes.Light` (or `CustomConsoleTheme.Light`) for a light background.
 
 ### Preview (screenshot helper)
 
@@ -81,7 +81,7 @@ Reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilo
 
 If you use central package management (`Directory.Packages.props`), declare the version there instead of on the reference.
 
-`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`, for example `Serilog.Sinks.Console.Themes.CustomConsoleTheme::DarkTheme, Serilog.Sinks.Console.Themes`, `::LightTheme`, or `Serilog.Sinks.Console.Themes.ConsoleThemes::Dark, Serilog.Sinks.Console.Themes`.
+`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`, for example `Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes`, `::Light`, or `Serilog.Sinks.Console.Themes.ConsoleThemes::Dark, Serilog.Sinks.Console.Themes`.
 
 ### This library (`CustomConsoleTheme.Dark`)
 
@@ -102,7 +102,7 @@ List the theme assembly in `Using` so configuration can load the type:
         "Name": "Console",
         "Args": {
           "restrictedToMinimumLevel": "Verbose",
-          "theme": "Serilog.Sinks.Console.Themes.CustomConsoleTheme::DarkTheme, Serilog.Sinks.Console.Themes",
+          "theme": "Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes",
           "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz} CorrelationId:[{CorrelationId}] [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}"
         }
       }
@@ -194,18 +194,18 @@ Other static members on Serilog’s theme type (for example `Code`, `Grayscale`,
 
 ## Custom theme (extend a base template)
 
-1. Subclass **`BaseTheme`**, or subclass **`DarkThemeTemplate`** / **`LightThemeTemplate`** and override only the members you need.
+1. Subclass **`BaseTheme`**, or subclass **`DarkTheme`** / **`LightTheme`** and override only the members you need.
 2. Use **`ThemeStyle`** (or **`TrueColor`**) for escape fragments.
 3. Register the theme:
 
 ```csharp
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console(theme: ConsoleThemes.UseTheme<MyThemeTemplate>())
+    .WriteTo.Console(theme: ConsoleThemes.UseTheme<MyBrandTheme>())
     .CreateLogger();
 ```
 
 ```csharp
-public sealed class MyThemeTemplate : DarkThemeTemplate
+public sealed class MyBrandTheme : DarkTheme
 {
     protected override string Text
         => ThemeStyle.Foreground(Color.Magenta);
@@ -221,9 +221,9 @@ public sealed class MyThemeTemplate : DarkThemeTemplate
 }
 ```
 
-Configuration cannot call `ConsoleThemes.UseTheme<MyThemeTemplate>()` from JSON. Expose the result as a **static property** (or field) on a type in **your** assembly, then reference it with `TypeFullName::MemberName, AssemblyName` (same pattern as the **Custom template** section above).
+Configuration cannot call `ConsoleThemes.UseTheme<MyBrandTheme>()` from JSON. Expose the result as a **static property** (or field) on a type in **your** assembly, then reference it with `TypeFullName::MemberName, AssemblyName` (same pattern as the **Custom template** section above).
 
-### How to do it properly
+### Example (static property + `appsettings.json`)
 
 In your application, declare for example:
 
@@ -231,11 +231,12 @@ In your application, declare for example:
 public static class LoggingThemes
 {
     public static ConsoleTheme FromTemplate { get; } =
-        ConsoleThemes.UseTheme<MyThemeTemplate>();
+        ConsoleThemes.UseTheme<MyBrandTheme>();
 }
 ```
 
 In `appsettings.json`:
+
 ```json
 {
   "Serilog": {
@@ -265,7 +266,7 @@ Also add the `MyApp` assembly to the `Using` array.
 
 ## Customizing built-in palettes
 
-Adjust the `KnownColor` constants in **`CustomConsoleTheme.DarkColors`** (dark) or **`LightColors`** (light). **`Dark`** and **`Light`** read those constants, so `ConsoleThemes.Dark` / `Light` pick up changes after recompilation.
+Adjust the `KnownColor` constants in **`CustomConsoleTheme.DarkColors`** (dark) or **`LightColors`** (light). The **`DarkTheme`** and **`LightTheme`** templates read those values, so **`ConsoleThemes.Dark`** / **`Light`** (and **`CustomConsoleTheme.Dark`** / **`Light`**) pick up changes after recompilation.
 
 ## Terminal support
 

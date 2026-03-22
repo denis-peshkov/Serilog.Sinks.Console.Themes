@@ -14,7 +14,7 @@ else if (themeArg.Equals("dark", StringComparison.OrdinalIgnoreCase))
 }
 else if (themeArg.Equals("custom", StringComparison.OrdinalIgnoreCase))
 {
-    theme = ConsoleThemes.UseTheme<MyTheme>();
+    theme = ConsoleThemes.UseTheme<MyBrandTheme>();
     themeLabel = "MyTheme (custom)";
 }
 else if (themeArg.Equals("sixteen", StringComparison.OrdinalIgnoreCase))
