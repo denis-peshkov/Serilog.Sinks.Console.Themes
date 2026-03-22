@@ -218,7 +218,7 @@ public sealed class MyThemeTemplate : DarkThemeTemplate
 
 Configuration cannot call `ConsoleThemes.UseTheme<MyThemeTemplate>()` from JSON. Expose the result as a **static property** (or field) on a type in **your** assembly, then reference it with `TypeFullName::MemberName, AssemblyName` (same pattern as the **Custom template** section above).
 
-### Example
+### How to do it properly
 
 In your application, declare for example:
 
