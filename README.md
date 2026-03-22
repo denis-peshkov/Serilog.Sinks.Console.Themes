@@ -54,11 +54,11 @@ The captures below were taken with those commands in a terminal that supports **
 
 **`CustomConsoleTheme.Dark`** — tuned for dark terminal backgrounds:
 
-![img-dark.png](img-dark.png)
+![Dark theme (CustomConsoleTheme.Dark)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/blob/master/img-dark.png)
 
 **`CustomConsoleTheme.Light`** — tuned for light terminal backgrounds (same sample as above):
 
-![img-light.png](img-light.png)
+![Light theme (CustomConsoleTheme.Light)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/blob/master/img-light.png)
 
 You can combine a theme with your own `outputTemplate` as usual for the console sink.
 
