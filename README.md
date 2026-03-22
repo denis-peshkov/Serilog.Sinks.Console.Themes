@@ -71,7 +71,7 @@ You can combine a theme with your own `outputTemplate` as usual for the console 
 Reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilog.Settings.Configuration/) and wire `ReadFrom.Configuration` (for example via `UseSerilog` in ASP.NET Core, or `ReadFrom.Configuration(configuration)` when building the logger).
 
 ```xml
-<PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
+<PackageReference Include="Serilog.Settings.Configuration" Version="..." />
 ```
 
 If you use central package management (`Directory.Packages.props`), declare the version there instead of on the reference.
@@ -199,8 +199,6 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 ```
 
-Fluent styling example (similar to **Serilog.Sinks.Console.LogThemes**):
-
 ```csharp
 public sealed class MyThemeTemplate : DarkThemeTemplate
 {
@@ -226,6 +224,8 @@ Example if you declared `public static ConsoleTheme FromTemplate { get; } = Cons
 {
   "Serilog": {
     "Using": [
+      "Serilog.Sinks.Console",
+      "Serilog.Sinks.Console.Themes",
       "MyApp"
     ],
     "MinimumLevel": {
@@ -247,7 +247,7 @@ Example if you declared `public static ConsoleTheme FromTemplate { get; } = Cons
 
 ## Customizing built-in palettes
 
-Adjust the `KnownColor` constants in **`CustomConsoleTheme.DarkColors`** (dark) or **`LightColors`** (light). **`DarkThemeTemplate`** and **`LightThemeTemplate`** read those constants, so `ConsoleThemes.Dark` / `Light` pick up changes after recompilation.
+Adjust the `KnownColor` constants in **`CustomConsoleTheme.DarkColors`** (dark) or **`LightColors`** (light). **`DarkTheme`** and **`LightTheme`** read those constants, so `ConsoleThemes.Dark` / `Light` pick up changes after recompilation.
 
 ## Terminal support
 
