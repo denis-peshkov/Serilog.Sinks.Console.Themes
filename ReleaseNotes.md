@@ -4,7 +4,7 @@
 
 ---
 
-## 3.0.0 - 24 Mar 2024
+## 4.0.0 - 24 Mar 2024
 
 ### Theming API
 
@@ -27,6 +27,23 @@
 - **README** — **`ExpressionTemplate` and `TemplateTheme`** section: ties types to **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)**, states that this library **extends** that stack with true-color **`TemplateTheme`** presets; sample **`ExpressionTemplate`** + **`WriteTo.Console(formatter)`**; optional constructor / **`TryParse`** parameters (**`formatProvider`**, **`nameResolver`**, **`applyThemeWhenOutputIsRedirected`**, **`encoder`**); **Features** bullets for **`TemplateThemes`** and **`CustomConsoleTheme.*TemplateTheme`**.
 - **`Serilog.Expressions` 5.0.0** — direct package reference in the library project and explicit **NuGet** dependency in **`config.nuspec`** (alongside **`Serilog.Sinks.Console`**).
 - **`config.nuspec`** — **`releaseNotes`** updated to describe **ExpressionTemplate** / **TemplateTheme** support.
+
+---
+
+## 3.0.0 - 23 Mar 2024
+
+### Breaking change
+
+- Removed **`ConsoleThemes`**. Use **`CustomConsoleTheme.Dark`**, **`CustomConsoleTheme.Light`**, and **`CustomConsoleTheme.UseTheme<T>()`** instead (same behavior; single public entry type).
+
+### Theming API
+
+- **`CustomConsoleTheme`** — cached **`Dark`** / **`Light`**, **`UseTheme<T>()`** for `T : BaseTheme, new()`, and **`DarkColors`** / **`LightColors`** palette constants.
+- **`BaseTheme`**, **`DarkTheme`**, **`LightTheme`**, **`ThemeStyle`**, **`TrueColor`** — unchanged roles.
+
+### Documentation
+
+- **README** and **`config.nuspec`** — all samples and strings use **`CustomConsoleTheme`** only.
 
 ---
 

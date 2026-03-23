@@ -24,10 +24,46 @@ internal sealed class CustomConsoleThemeTests
     }
 
     [Test]
-    public void CustomConsoleTheme_aliases_reference_same_instances_as_ConsoleThemes()
+    public void Dark_and_Light_presets_are_cached_singletons()
     {
-        ReferenceEquals(CustomConsoleTheme.Dark, ConsoleThemes.Dark).Should().BeTrue();
-        ReferenceEquals(CustomConsoleTheme.Light, ConsoleThemes.Light).Should().BeTrue();
+        ReferenceEquals(CustomConsoleTheme.Dark, CustomConsoleTheme.Dark).Should().BeTrue();
+        ReferenceEquals(CustomConsoleTheme.Light, CustomConsoleTheme.Light).Should().BeTrue();
+    }
+
+    [Test]
+    public void UseTheme_Dark_matches_Cached_Dark_per_style()
+    {
+        var cached = ThemeTestHelpers.GetStyles(CustomConsoleTheme.Dark);
+        var fresh = ThemeTestHelpers.GetStyles(CustomConsoleTheme.UseTheme<DarkTheme>());
+        cached.Keys.Should().BeEquivalentTo(fresh.Keys);
+        foreach (var key in cached.Keys)
+            cached[key].Should().Be(fresh[key]);
+    }
+
+    [Test]
+    public void UseTheme_Light_matches_Cached_Light_per_style()
+    {
+        var cached = ThemeTestHelpers.GetStyles(CustomConsoleTheme.Light);
+        var fresh = ThemeTestHelpers.GetStyles(CustomConsoleTheme.UseTheme<LightTheme>());
+        cached.Keys.Should().BeEquivalentTo(fresh.Keys);
+        foreach (var key in cached.Keys)
+            cached[key].Should().Be(fresh[key]);
+    }
+
+    [Test]
+    public void UseTheme_custom_subclass_changes_overridden_style_only()
+    {
+        var theme = CustomConsoleTheme.UseTheme<TextOverrideTheme>();
+        var dict = ThemeTestHelpers.GetStyles(theme);
+        dict[ConsoleThemeStyle.Text].Should().Be(TrueColor.Foreground(KnownColor.Gold));
+        dict[ConsoleThemeStyle.LevelFatal].Should().Be(
+            ThemeTestHelpers.GetStyle(CustomConsoleTheme.Dark, ConsoleThemeStyle.LevelFatal));
+    }
+
+    /// <summary>Minimal override to exercise <see cref="CustomConsoleTheme.UseTheme{T}"/> with a user-defined <see cref="BaseTheme"/>.</summary>
+    private sealed class TextOverrideTheme : DarkTheme
+    {
+        protected override string Text => TrueColor.Foreground(KnownColor.Gold);
     }
 
     [Test]
