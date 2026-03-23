@@ -95,6 +95,7 @@ jobs:
             -Dsonar.projectKey=Serilog.Sinks.Console.Themes
             -Dsonar.cs.opencover.reportsPaths=TestResults/**/coverage.opencover.xml
             -Dsonar.sources=Serilog.Sinks.Console.Themes/
+            -Dsonar.tests=Serilog.Sinks.Console.Themes.UnitTests/
             -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
