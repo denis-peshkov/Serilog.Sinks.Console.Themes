@@ -9,12 +9,12 @@ if (themeArg.Equals("light", StringComparison.OrdinalIgnoreCase))
 }
 else if (themeArg.Equals("dark", StringComparison.OrdinalIgnoreCase))
 {
-    theme = ConsoleThemes.Dark;
+    theme = CustomConsoleTheme.Dark;
     themeLabel = "Dark";
 }
 else if (themeArg.Equals("custom", StringComparison.OrdinalIgnoreCase))
 {
-    theme = ConsoleThemes.UseTheme<MyBrandTheme>();
+    theme = CustomConsoleTheme.UseTheme<MyBrandTheme>();
     themeLabel = "MyBrandTheme (custom)";
 }
 else if (themeArg.Equals("sixteen", StringComparison.OrdinalIgnoreCase))
