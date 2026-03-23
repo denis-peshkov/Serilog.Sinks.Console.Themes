@@ -1,14 +1,37 @@
-using System;
-using System.Linq;
-using System.Diagnostics;
-using Serilog;
-using Serilog.Sinks.Console.Themes;
-using Serilog.Context;
+﻿var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "";
 
-var themeArg = args.FirstOrDefault(a => !a.StartsWith("-", StringComparison.Ordinal)) ?? "dark";
-var theme = themeArg.Equals("light", StringComparison.OrdinalIgnoreCase)
-    ? CustomConsoleTheme.Light
-    : CustomConsoleTheme.Dark;
+ConsoleTheme theme;
+string themeLabel;
+if (themeArg.Equals("light", StringComparison.OrdinalIgnoreCase))
+{
+    theme = CustomConsoleTheme.Light;
+    themeLabel = "Light";
+}
+else if (themeArg.Equals("dark", StringComparison.OrdinalIgnoreCase))
+{
+    theme = ConsoleThemes.Dark;
+    themeLabel = "Dark";
+}
+else if (themeArg.Equals("custom", StringComparison.OrdinalIgnoreCase))
+{
+    theme = ConsoleThemes.UseTheme<MyBrandTheme>();
+    themeLabel = "MyBrandTheme (custom)";
+}
+else if (themeArg.Equals("sixteen", StringComparison.OrdinalIgnoreCase))
+{
+    theme = AnsiConsoleTheme.Sixteen;
+    themeLabel = "AnsiConsoleTheme.Sixteen";
+}
+else if (themeArg.Equals("code", StringComparison.OrdinalIgnoreCase))
+{
+    theme = AnsiConsoleTheme.Code;
+    themeLabel = "AnsiConsoleTheme.Code";
+}
+else
+{
+    theme = ConsoleTheme.None;
+    themeLabel = "ConsoleTheme.None";
+}
 
 const string outputTemplate =
     "{Timestamp:HH:mm:ss.fff} [{Level,-11}] {SourceContext:l}: {Message:lj}{NewLine}{Exception}";
@@ -21,16 +44,16 @@ Log.Logger = new LoggerConfiguration()
 
 using (LogContext.PushProperty("DemoRunId", Guid.NewGuid().ToString("N")[..8]))
 {
-    Log.Verbose("Уровень Verbose — детальная отладочная информация.");
-    Log.Debug("Уровень Debug — сообщение отладки.");
-    Log.Information("Уровень Information — обычное информационное сообщение.");
-    Log.Warning("Уровень Warning — предупреждение.");
-    Log.Error("Уровень Error — ошибка без исключения.");
-    Log.Fatal("Уровень Fatal — критическая ошибка (демо: приложение продолжит работу).");
+    Log.Verbose("Verbose level — detailed diagnostic output.");
+    Log.Debug("Debug level — debug message.");
+    Log.Information("Information level — standard informational message.");
+    Log.Warning("Warning level — warning.");
+    Log.Error("Error level — error without an exception.");
+    Log.Fatal("Fatal level — critical error (demo: the app will keep running).");
 
     Log.Information(
-        "Скаляры в шаблоне: строка {StringProp}, число {Number}, bool {Flag}, перечисление {Day}, GUID {Guid}, URI {Uri}, дата {When}",
-        "пример",
+        "Scalars in template: string {StringProp}, number {Number}, bool {Flag}, enum {Day}, GUID {Guid}, URI {Uri}, date/time {When}",
+        "sample",
         42,
         true,
         DayOfWeek.Friday,
@@ -38,10 +61,10 @@ using (LogContext.PushProperty("DemoRunId", Guid.NewGuid().ToString("N")[..8]))
         new Uri("https://example.com/path"),
         new DateTimeOffset(2026, 3, 21, 12, 0, 0, TimeSpan.FromHours(3)));
 
-    Log.Information("Null в свойстве: {NullableString} и {NullableObject}", (string?)null, (object?)null);
+    Log.Information("Null properties: {NullableString} and {NullableObject}", (string?)null, (object?)null);
 
     Log.Information(
-        "Деструктурированный объект {@Payload}",
+        "Destructured object {@Payload}",
         new
         {
             Id = 7,
@@ -51,20 +74,20 @@ using (LogContext.PushProperty("DemoRunId", Guid.NewGuid().ToString("N")[..8]))
         });
 
     Log.ForContext("SourceContext", "Serilog.Sinks.Console.Themes.Demo.SampleService")
-        .Warning("Сообщение с другим SourceContext для сравнения цвета имени контекста.");
+        .Warning("Message with a different SourceContext to compare context name styling.");
 
     try
     {
-        throw new InvalidOperationException("Внутреннее исключение демо.", new ArgumentException("Причина."));
+        throw new InvalidOperationException("Demo inner exception.", new ArgumentException("Cause."));
     }
     catch (Exception ex)
     {
-        Log.Error(ex, "Исключение с трассировкой стека (Exception).");
+        Log.Error(ex, "Exception with stack trace.");
     }
 
     Log.Information(
-        "Структурированный вывод завершён. Тема: {Theme}. Для скриншота: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light",
-        themeArg.Equals("light", StringComparison.OrdinalIgnoreCase) ? "Light" : "Dark");
+        "Structured output complete. Theme: {Theme}. Run: dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark|light|custom|sixteen|code (or `--` with no token / unknown token for ConsoleTheme.None)",
+        themeLabel);
 }
 
 Log.CloseAndFlush();
@@ -72,6 +95,6 @@ Log.CloseAndFlush();
 if (Debugger.IsAttached)
 {
     Console.WriteLine();
-    Console.WriteLine("Нажмите Enter для выхода…");
+    Console.WriteLine("Press Enter to exit…");
     Console.ReadLine();
 }

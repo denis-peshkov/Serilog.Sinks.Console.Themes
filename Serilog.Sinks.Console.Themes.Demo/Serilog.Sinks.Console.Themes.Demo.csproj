@@ -13,6 +13,11 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <Target Name="DeleteBinObjFolders" AfterTargets="Clean">
+    <RemoveDir Directories=".\bin\**" />
+    <Delete Files=".\obj\**\*.cs" />
+  </Target>
+
   <ItemGroup>
     <ProjectReference Include="..\Serilog.Sinks.Console.Themes\Serilog.Sinks.Console.Themes.csproj" />
   </ItemGroup>
