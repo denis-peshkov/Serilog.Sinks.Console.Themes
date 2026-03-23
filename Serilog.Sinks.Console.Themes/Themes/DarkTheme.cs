@@ -36,7 +36,7 @@ public class DarkTheme : BaseTheme
         ThemeStyle.Foreground(CustomConsoleTheme.DarkColors.LevelErrorForeground)
             .Background(CustomConsoleTheme.DarkColors.LevelErrorBackground);
 
-    protected override string LevelFatal => TrueColor.BoldForegroundBackground(
+    protected override string LevelFatal => TrueColorConverter.BoldForegroundBackground(
         CustomConsoleTheme.DarkColors.LevelFatalForeground,
         CustomConsoleTheme.DarkColors.LevelFatalBackground);
 }

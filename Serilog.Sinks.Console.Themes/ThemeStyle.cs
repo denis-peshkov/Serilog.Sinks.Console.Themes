@@ -5,17 +5,17 @@ public static class ThemeStyle
 {
     public static string Unthemed => string.Empty;
 
-    public static string Foreground(KnownColor known) => TrueColor.Foreground(known);
+    public static string Foreground(KnownColor known) => TrueColorConverter.Foreground(known);
 
-    public static string Foreground(ConsoleColor console) => TrueColor.Foreground(console);
+    public static string Foreground(ConsoleColor console) => TrueColorConverter.Foreground(console);
 
-    public static string Foreground(Color color) => TrueColor.Foreground(color);
+    public static string Foreground(Color color) => TrueColorConverter.Foreground(color);
 
-    public static string Background(KnownColor known) => TrueColor.Background(known);
+    public static string Background(KnownColor known) => TrueColorConverter.Background(known);
 
-    public static string Background(ConsoleColor console) => TrueColor.Background(console);
+    public static string Background(ConsoleColor console) => TrueColorConverter.Background(console);
 
-    public static string Background(Color color) => TrueColor.Background(color);
+    public static string Background(Color color) => TrueColorConverter.Background(color);
 
     public static string FormatType(FormatTypeEnum formatType) => string.Empty.FormatType(formatType);
 
@@ -33,17 +33,17 @@ public static class ThemeStyle
 
     public static string Style(Color foreground) => Foreground(foreground);
 
-    public static string Foreground(this string logStyle, KnownColor known) => logStyle + TrueColor.Foreground(known);
+    public static string Foreground(this string logStyle, KnownColor known) => logStyle + TrueColorConverter.Foreground(known);
 
-    public static string Foreground(this string logStyle, ConsoleColor console) => logStyle + TrueColor.Foreground(console);
+    public static string Foreground(this string logStyle, ConsoleColor console) => logStyle + TrueColorConverter.Foreground(console);
 
-    public static string Foreground(this string logStyle, Color color) => logStyle + TrueColor.Foreground(color);
+    public static string Foreground(this string logStyle, Color color) => logStyle + TrueColorConverter.Foreground(color);
 
-    public static string Background(this string logStyle, KnownColor known) => logStyle + TrueColor.Background(known);
+    public static string Background(this string logStyle, KnownColor known) => logStyle + TrueColorConverter.Background(known);
 
-    public static string Background(this string logStyle, ConsoleColor console) => logStyle + TrueColor.Background(console);
+    public static string Background(this string logStyle, ConsoleColor console) => logStyle + TrueColorConverter.Background(console);
 
-    public static string Background(this string logStyle, Color color) => logStyle + TrueColor.Background(color);
+    public static string Background(this string logStyle, Color color) => logStyle + TrueColorConverter.Background(color);
 
     public static string FormatType(this string logStyle, FormatTypeEnum formatType)
     {

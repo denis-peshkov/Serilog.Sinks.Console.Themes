@@ -5,7 +5,7 @@ namespace Serilog.Sinks.Console.Themes;
 /// Same palettes as <see cref="CustomConsoleTheme.Dark"/> / <see cref="CustomConsoleTheme.Light"/>, as <see cref="TemplateTheme"/> for use with
 /// <see cref="Serilog.Templates.ExpressionTemplate"/> and <c>WriteTo.Console(ITextFormatter)</c>.
 /// </summary>
-public static class TemplateThemes
+public static class CustomTemplateTheme
 {
     private static readonly TemplateTheme DarkInstance = Create<DarkTheme>();
 

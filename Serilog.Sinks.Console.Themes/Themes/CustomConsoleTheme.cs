@@ -2,8 +2,8 @@
 namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>
-/// Built-in dark/light console themes, palette constants, <see cref="UseTheme{T}"/> for any <see cref="BaseTheme"/> template,
-/// and <see cref="TemplateTheme"/> aliases for <see cref="Serilog.Templates.ExpressionTemplate"/>.
+/// Built-in dark/light console themes, palette constants, and <see cref="UseTheme{T}"/> for any <see cref="BaseTheme"/> template.
+/// For <see cref="Serilog.Templates.ExpressionTemplate"/>, use <see cref="CustomTemplateTheme"/>.
 /// </summary>
 /// <remarks>
 /// Prefer static <see cref="KnownColor"/> entries (not OS-reserved names like <see cref="KnownColor.ActiveCaption"/>), which are stable across platforms.
@@ -16,7 +16,7 @@ public static class CustomConsoleTheme
 
     private static readonly AnsiConsoleTheme LightInstance = Create<LightTheme>();
 
-    /// <summary>Adjust these <see cref="KnownColor"/> values; escape sequences are built in <see cref="TrueColor"/> / <see cref="ThemeStyle"/>.</summary>
+    /// <summary>Adjust these <see cref="KnownColor"/> values; escape sequences are built in <see cref="TrueColorConverter"/> / <see cref="ThemeStyle"/>.</summary>
     public static class DarkColors
     {
         public const KnownColor Text          = KnownColor.GhostWhite;
@@ -69,12 +69,6 @@ public static class CustomConsoleTheme
 
     /// <summary>Light palette (<see cref="LightTheme"/>).</summary>
     public static ConsoleTheme Light => LightInstance;
-
-    /// <summary>Dark palette for <see cref="Serilog.Templates.ExpressionTemplate"/> (<see cref="TemplateThemes.Dark"/>).</summary>
-    public static TemplateTheme DarkTemplateTheme => TemplateThemes.Dark;
-
-    /// <summary>Light palette for <see cref="Serilog.Templates.ExpressionTemplate"/> (<see cref="TemplateThemes.Light"/>).</summary>
-    public static TemplateTheme LightTemplateTheme => TemplateThemes.Light;
 
     /// <summary>Builds a <see cref="ConsoleTheme"/> from a <see cref="BaseTheme"/> template.</summary>
     public static ConsoleTheme UseTheme<T>() where T : BaseTheme, new() => Create<T>();

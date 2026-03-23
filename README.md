@@ -6,15 +6,12 @@ A small companion library for [Serilog.Sinks.Console](https://www.nuget.org/pack
 
 ## Features
 
-- **`CustomConsoleTheme`** — cached **`Dark`** / **`Light`** presets, palette constants (**`DarkColors`** / **`LightColors`**), and **`UseTheme<T>()`** to build a **`ConsoleTheme`** from any **`BaseTheme`** template (`WriteTo.Console` and **`Serilog.Settings.Configuration`** via **`CustomConsoleTheme::Dark`** / **`::Light`**).
-- **`CustomConsoleTheme.DarkTheme`** / **`LightTheme`** — convenience aliases for **`ConsoleThemes.Dark`** / **`Light`** (`ConsoleTheme` for `WriteTo.Console`).
-- **`CustomConsoleTheme.DarkTemplateTheme`** / **`LightTemplateTheme`** — same palettes as **`TemplateThemes.Dark`** / **`Light`** (`TemplateTheme` for **`Serilog.Expressions`** **`ExpressionTemplate`**).
-- **`TemplateThemes.Dark`** / **`Light`** and **`TemplateThemes.UseTheme<T>()`** — **`TemplateTheme`** equivalents of the ANSI console themes (requires **`Serilog.Expressions`**).
-- **`ConsoleThemes.UseTheme<T>()`** — build a theme from a **`BaseTheme`** template.
+- **`CustomConsoleTheme`** — cached **`Dark`** / **`Light`** presets, palette constants (**`DarkColors`** / **`LightColors`**), and **`UseTheme<T>()`** for a **`ConsoleTheme`**.
+- **`CustomTemplateTheme.Dark`** / **`Light`** and **`CustomTemplateTheme.UseTheme<T>()`** — **`TemplateTheme`** presets parallel to **`CustomConsoleTheme`** (requires **`Serilog.Expressions`**).
 - **`ThemeStyle`** — fluent foreground, background, and SGR modes (`FormatTypeEnum`) for theme strings.
-- **`TrueColor`** — low-level `KnownColor` / `ConsoleColor` / `Color` → `38;2` / `48;2` fragments, plus bold combinations for emphasis.
+- **`TrueColorConverter`** — low-level `KnownColor` / `ConsoleColor` / `Color` → `38;2` / `48;2` fragments, plus bold combinations for emphasis.
 
-Prefer **static web colors** from `KnownColor` (for example `GhostWhite`, `CadetBlue`). OS-reserved `KnownColor` names (such as `ActiveCaption`) are rejected by `TrueColor` when resolved from `KnownColor` because they are not portable.
+Prefer **static web colors** from `KnownColor` (for example `GhostWhite`, `CadetBlue`). OS-reserved `KnownColor` names (such as `ActiveCaption`) are rejected by `TrueColorConverter` when resolved from `KnownColor` because they are not portable.
 
 ## Install NuGet package
 
@@ -30,6 +27,8 @@ dotnet add package Serilog.Sinks.Console.Themes
 
 ## Quick start
 
+In your application:
+
 ```csharp
 using Serilog;
 using Serilog.Sinks.Console.Themes;
@@ -43,45 +42,14 @@ Log.Information("Hello, themed console");
 
 Use **`CustomConsoleTheme.Light`** for a light background.
 
-### `ExpressionTemplate` and `TemplateTheme`
+To use in `appsettings.json`, have to reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilog.Settings.Configuration/) and wire `ReadFrom.Configuration` (for example via `UseSerilog` in ASP.NET Core, or `ReadFrom.Configuration(configuration)` when building the logger).
 
-The **`ExpressionTemplate`** type, **`TemplateTheme`**, and the **`Serilog.Templates`** APIs live in the **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)** package — this repo **extends** that stack with **24-bit true-color** `TemplateTheme` presets (`TemplateThemes`, `CustomConsoleTheme.DarkTemplateTheme` / `LightTemplateTheme`, `ThemeStyleConverter`, and template helpers built on **`BaseTheme`**).
+`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`. For built-in presets use **`Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes`** (or `::Light`) — same names as in code, and distinct from Serilog’s **`AnsiConsoleTheme::…`** strings.
 
-When you format the console with **`Serilog.Expressions`** instead of `outputTemplate`, pass a **`TemplateTheme`** into **`ExpressionTemplate`** (or `TryParse`). This library exposes the same palettes as **`ConsoleThemes`**:
-
-```csharp
-using Serilog;
-using Serilog.Sinks.Console;
-using Serilog.Sinks.Console.Themes;
-using Serilog.Templates;
-
-var formatter = new ExpressionTemplate(
-    "{@t:HH:mm:ss} [{@l:u3}] {@m}\n",
-    formatProvider: null,
-    nameResolver: null,
-    theme: TemplateThemes.Dark, // or CustomConsoleTheme.DarkTemplateTheme
-    applyThemeWhenOutputIsRedirected: true,
-    encoder: null);
-
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console(formatter)
-    .CreateLogger();
-```
-
-#### Optional parameters
-
-The **`ExpressionTemplate`** constructor (and the full **`TryParse`** overload) take several arguments besides the template text and theme:
-
-- **`formatProvider`** — `IFormatProvider` for culture-specific formatting of values in the template (dates, numbers). **`null`** uses default formatting (typically the current culture).
-- **`nameResolver`** — Resolves custom function names in the template. **`null`** means only built-in functions; pass a **`NameResolver`** when you register app-specific template functions.
-- **`applyThemeWhenOutputIsRedirected`** — When **`false`**, Serilog may omit theme ANSI sequences if the console output is redirected (file, pipe, some test hosts), so logs stay plain text. When **`true`**, the theme is applied anyway—useful when the consumer still expects ANSI escapes.
-- **`encoder`** — Optional **`TemplateOutputEncoder`** for transforming or sanitizing substituted output. **`null`** applies no extra encoding.
-
-Reference **`Serilog.Expressions`** (already pulled transitively when you use `ExpressionTemplate`). Override colors on a **`BaseTheme`** subclass and call **`TemplateThemes.UseTheme<T>()`** or **`ToTemplateTheme()`** the same way you would use **`ConsoleThemes.UseTheme<T>()`** for **`AnsiConsoleTheme`**.
 
 ### Preview (screenshot helper)
 
-The **`Serilog.Sinks.Console.Themes.Demo`** sample logs every level plus structured properties, nulls, a different `SourceContext`, and an exception so you can compare themes in a real terminal:
+The **`Serilog.Sinks.Console.Themes.Demo`** project lets you compare themes in a terminal that supports **24-bit color**. The demo prints every log level (Verbose through Fatal), structured scalars (string, number, boolean, enum, GUID, URI, date/time), `null` properties, a destructured object (`{@...}`), a line with a custom `SourceContext`, and an error with inner exception and stack trace — so you can see how each theme tints the timestamp/level band, message text, property names, scalar kinds, and error vs. fatal highlighting.
 
 ```bash
 dotnet run --project Serilog.Sinks.Console.Themes.Demo -- dark
@@ -98,7 +66,7 @@ The last line passes **no theme token** after `--` (same as an empty first argum
 
 #### Screenshots
 
-The captures below were taken with those commands in a terminal that supports **24-bit color**. The demo prints every log level (Verbose through Fatal), structured scalars (string, number, boolean, enum, GUID, URI, date/time), `null` properties, a destructured object (`{@...}`), a line with a custom `SourceContext`, and an error with inner exception and stack trace. That combination shows how each theme tints the timestamp/level band, message text, property names, scalar kinds, and error vs. fatal highlighting.
+Captures below use the same demo commands.
 
 **`CustomConsoleTheme.Dark`** — tuned for dark terminal backgrounds:
 
@@ -109,18 +77,6 @@ The captures below were taken with those commands in a terminal that supports **
 ![Light console sample](https://raw.githubusercontent.com/denis-peshkov/Serilog.Sinks.Console.Themes/master/img-light.png)
 
 You can combine a theme with your own `outputTemplate` as usual for the console sink.
-
-## appsettings.json (`Serilog.Settings.Configuration`)
-
-Reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilog.Settings.Configuration/) and wire `ReadFrom.Configuration` (for example via `UseSerilog` in ASP.NET Core, or `ReadFrom.Configuration(configuration)` when building the logger).
-
-```xml
-<PackageReference Include="Serilog.Settings.Configuration" Version="..." />
-```
-
-If you use central package management (`Directory.Packages.props`), declare the version there instead of on the reference.
-
-`theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`. For built-in presets use **`Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes`** (or `::Light`) — same names as in code, and distinct from Serilog’s **`AnsiConsoleTheme::…`** strings.
 
 ### This library (`CustomConsoleTheme.Dark`)
 
@@ -234,7 +190,7 @@ Other static members on Serilog’s theme type (for example `Code`, `Grayscale`,
 ## Custom theme (extend a base template)
 
 1. Subclass **`BaseTheme`**, or subclass **`DarkTheme`** / **`LightTheme`** and override only the members you need.
-2. Use **`ThemeStyle`** (or **`TrueColor`**) for escape fragments.
+2. Use **`ThemeStyle`** (or **`TrueColorConverter`**) for escape fragments.
 3. Register the theme:
 
 ```csharp
@@ -260,7 +216,7 @@ public sealed class MyBrandTheme : DarkTheme
 }
 ```
 
-Configuration cannot call `CustomConsoleTheme.UseTheme<MyBrandTheme>()` from JSON. Expose the result as a **static property** (or field) on a type in **your** assembly, then reference it with `TypeFullName::MemberName, AssemblyName` (same pattern as the **Custom template** section above).
+For **appsettings.json**, use the same **static member** pattern as in **Custom template (`CustomConsoleTheme.UseTheme<T>()`)** above (expose `CustomConsoleTheme.UseTheme<MyBrandTheme>()` on your type, then `TypeFullName::MemberName, AssemblyName` in JSON).
 
 ### Example (static property + `appsettings.json`)
 
@@ -308,9 +264,41 @@ In `appsettings.json`:
 
 Also add the `MyApp` assembly to the `Using` array.
 
-## Customizing built-in palettes
+## Expressions with `ExpressionTemplate` and `TemplateTheme`
 
-Adjust the `KnownColor` constants in **`CustomConsoleTheme.DarkColors`** (dark) or **`LightColors`** (light). The **`DarkTheme`** and **`LightTheme`** templates read those values, so **`CustomConsoleTheme.Dark`** / **`Light`** pick up changes after recompilation.
+The **`ExpressionTemplate`** type, **`TemplateTheme`**, and the **`Serilog.Templates`** APIs live in the **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)** package — this repo **extends** that stack with **24-bit true-color** `TemplateTheme` presets (**`CustomTemplateTheme`**, **`ThemeStyleConverter`**, and template helpers built on **`BaseTheme`**).
+
+When you format the console with **`Serilog.Expressions`** instead of `outputTemplate`, pass a **`TemplateTheme`** into **`ExpressionTemplate`** (or `TryParse`). The same palettes are available as **`CustomConsoleTheme.Dark`** / **`Light`** (console) and **`CustomTemplateTheme.Dark`** / **`Light`** (template):
+
+```csharp
+using Serilog;
+using Serilog.Sinks.Console;
+using Serilog.Sinks.Console.Themes;
+using Serilog.Templates;
+
+var formatter = new ExpressionTemplate(
+    "{@t:HH:mm:ss} [{@l:u3}] {@m}\n",
+    formatProvider: null,
+    nameResolver: null,
+    theme: CustomTemplateTheme.Dark,
+    applyThemeWhenOutputIsRedirected: true,
+    encoder: null);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console(formatter)
+    .CreateLogger();
+```
+
+### Optional parameters
+
+The **`ExpressionTemplate`** constructor (and the full **`TryParse`** overload) take several arguments besides the template text and theme:
+
+- **`formatProvider`** — `IFormatProvider` for culture-specific formatting of values in the template (dates, numbers). **`null`** uses default formatting (typically the current culture).
+- **`nameResolver`** — Resolves custom function names in the template. **`null`** means only built-in functions; pass a **`NameResolver`** when you register app-specific template functions.
+- **`applyThemeWhenOutputIsRedirected`** — When **`false`**, Serilog may omit theme ANSI sequences if the console output is redirected (file, pipe, some test hosts), so logs stay plain text. When **`true`**, the theme is applied anyway—useful when the consumer still expects ANSI escapes.
+- **`encoder`** — Optional **`TemplateOutputEncoder`** for transforming or sanitizing substituted output. **`null`** applies no extra encoding.
+
+Reference **`Serilog.Expressions`** (already pulled transitively when you use `ExpressionTemplate`). Override colors on a **`BaseTheme`** subclass and call **`CustomTemplateTheme.UseTheme<T>()`** or **`ToTemplateTheme()`** the same way you would use **`CustomConsoleTheme.UseTheme<T>()`** for a **`ConsoleTheme`**.
 
 ## Terminal support
 

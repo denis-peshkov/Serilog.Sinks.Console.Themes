@@ -3,7 +3,7 @@ namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>
 /// Base type for console theme templates. Override any style, then call <see cref="CustomConsoleTheme.UseTheme{T}"/> for <see cref="ConsoleTheme"/>
-/// or <see cref="TemplateThemes.UseTheme{T}"/> / <see cref="ToTemplateTheme"/> for <see cref="ExpressionTemplate"/>.
+/// or <see cref="CustomTemplateTheme.UseTheme{T}"/> / <see cref="ToTemplateTheme"/> for <see cref="ExpressionTemplate"/>.
 /// Built-in palettes are <see cref="CustomConsoleTheme.Dark"/> / <see cref="CustomConsoleTheme.Light"/>.
 /// </summary>
 public abstract class BaseTheme

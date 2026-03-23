@@ -1,43 +1,43 @@
-namespace Serilog.Sinks.Console.Themes.UnitTests;
+﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
-internal sealed class TemplateThemesTests
+internal sealed class CustomTemplateThemeTests
 {
     [Test]
     public void Dark_and_Light_are_not_null()
     {
-        TemplateThemes.Dark.Should().NotBeNull();
-        TemplateThemes.Light.Should().NotBeNull();
+        CustomTemplateTheme.Dark.Should().NotBeNull();
+        CustomTemplateTheme.Light.Should().NotBeNull();
     }
 
     [Test]
     public void UseTheme_Dark_matches_Cached_Dark_template_output()
     {
-        FormatMessage(TemplateThemes.Dark).Should().Be(FormatMessage(TemplateThemes.UseTheme<DarkTheme>()));
+        FormatMessage(CustomTemplateTheme.Dark).Should().Be(FormatMessage(CustomTemplateTheme.UseTheme<DarkTheme>()));
     }
 
     [Test]
     public void UseTheme_Light_matches_Cached_Light_template_output()
     {
-        FormatMessage(TemplateThemes.Light).Should().Be(FormatMessage(TemplateThemes.UseTheme<LightTheme>()));
+        FormatMessage(CustomTemplateTheme.Light).Should().Be(FormatMessage(CustomTemplateTheme.UseTheme<LightTheme>()));
     }
 
     [Test]
     public void UseTheme_custom_subclass_applies_overridden_text_style_to_message()
     {
-        var gold = TrueColor.Foreground(KnownColor.Gold);
-        FormatMessage(TemplateThemes.UseTheme<TemplateTextOverrideTheme>()).Should().Contain(gold);
-        FormatMessage(TemplateThemes.Dark).Should().NotContain(gold);
+        var gold = TrueColorConverter.Foreground(KnownColor.Gold);
+        FormatMessage(CustomTemplateTheme.UseTheme<TemplateTextOverrideTheme>()).Should().Contain(gold);
+        FormatMessage(CustomTemplateTheme.Dark).Should().NotContain(gold);
     }
 
     [Test]
-    public void ExpressionTemplate_TryParse_succeeds_with_TemplateThemes_Dark()
+    public void ExpressionTemplate_TryParse_succeeds_with_CustomTemplateTheme_Dark()
     {
         var ok = ExpressionTemplate.TryParse(
             "{@l}",
             formatProvider: null,
             nameResolver: null,
-            theme: TemplateThemes.Dark,
+            theme: CustomTemplateTheme.Dark,
             applyThemeWhenOutputIsRedirected: false,
             encoder: null,
             result: out var et,
@@ -75,6 +75,6 @@ internal sealed class TemplateThemesTests
 
     private sealed class TemplateTextOverrideTheme : DarkTheme
     {
-        protected override string Text => TrueColor.Foreground(KnownColor.Gold);
+        protected override string Text => TrueColorConverter.Foreground(KnownColor.Gold);
     }
 }

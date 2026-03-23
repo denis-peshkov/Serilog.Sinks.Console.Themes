@@ -6,25 +6,32 @@
 
 ## 4.0.0 - 24 Mar 2024
 
+### Breaking change
+
+- Renamed **`TemplateThemes`** → **`CustomTemplateTheme`** (and **`TemplateThemesTests`** → **`CustomTemplateThemeTests`**). Update code and **`appsettings`** references if you used the old type name.
+- Removed **`CustomConsoleTheme.DarkTemplateTheme`** / **`LightTemplateTheme`** — use **`CustomTemplateTheme.Dark`** / **`Light`** for **`ExpressionTemplate`**.
+- Renamed **`TrueColor`** → **`TrueColorConverter`** (file **`TrueColor.cs`** → **`TrueColorConverter.cs`**; tests **`TrueColorTests`** → **`TrueColorConverterTests`**).
+
 ### Theming API
 
-- **`TemplateThemes`** — cached **`Dark`** / **`Light`** as **`TemplateTheme`**, plus **`UseTheme<T>()`** where **`T : BaseTheme, new()`** (parallel to **`ConsoleThemes`**).
-- **`CustomConsoleTheme.DarkTemplateTheme`** / **`LightTemplateTheme`** — aliases for **`TemplateThemes.Dark`** / **`Light`** (same instances).
+- **`CustomTemplateTheme`** — cached **`Dark`** / **`Light`** as **`TemplateTheme`**, plus **`UseTheme<T>()`** where **`T : BaseTheme, new()`**.
+- **`CustomConsoleTheme`** — **`ConsoleTheme`** presets only; **`ExpressionTemplate`** themes are **`CustomTemplateTheme.Dark`** / **`Light`** (no duplicate properties on **`CustomConsoleTheme`**).
 - **`BaseTheme`** — **`ToTemplateStyleDictionary()`** and **`ToTemplateTheme()`** to feed **`ExpressionTemplate`** / **`TryParse`**.
 - **`ThemeStyleConverter.ToTemplateStyles(...)`** — maps **`IReadOnlyDictionary<ConsoleThemeStyle, string>`** to **`Dictionary<TemplateThemeStyle, string>`** by enum name, with a special case for **`ConsoleThemeStyle.Scalar`** vs obsolete **`Object`**; throws **`ArgumentException`** when a console style name does not match **`TemplateThemeStyle`** (including bogus numeric enum values).
 - **`GlobalUsings.cs`** (library) — **`Serilog.Templates`** and **`Serilog.Templates.Themes`**.
 
 ### Sample and tests
 
-- **`TemplateThemesTests`** — non-null dark/light, **`UseTheme<DarkTheme/LightTheme>`** matches cached themes, custom **`DarkTheme`** override affects formatted output, **`ExpressionTemplate.TryParse`** with **`TemplateThemes.Dark`**.
+- **`CustomTemplateThemeTests`** — non-null dark/light, **`UseTheme<DarkTheme/LightTheme>`** matches cached themes, custom **`DarkTheme`** override affects formatted output, **`ExpressionTemplate.TryParse`** with **`CustomTemplateTheme.Dark`**.
 - **`ThemeStyleConverterTests`** — full style map from **`DarkTheme`**, parity with **`BaseTheme.ToTemplateStyleDictionary()`**, invalid **`ConsoleThemeStyle`** throws.
-- **`CustomConsoleThemeTests`** — template aliases share instances with **`TemplateThemes`**.
+- **`CustomConsoleThemeTests`** — console theme caching and **`UseTheme<T>()`**.
 - **`ThemeStyleTests`** — covers private **`ToSgrParameter(FormatTypeEnum.None)`** branch (reflection) for full coverage of **`ThemeStyle`**.
+- **`TrueColorConverterTests`** — SGR fragments from **`KnownColor`** / **`ConsoleColor`** / **`Color`**, bold combinations, system **`KnownColor`** rejection.
 - **`GlobalUsings.cs`** (tests) — **`System.IO`**, **`Serilog.Events`**, **`Serilog.Parsing`**, **`Serilog.Templates`**, **`Serilog.Templates.Themes`**.
 
 ### Documentation and packaging
 
-- **README** — **`ExpressionTemplate` and `TemplateTheme`** section: ties types to **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)**, states that this library **extends** that stack with true-color **`TemplateTheme`** presets; sample **`ExpressionTemplate`** + **`WriteTo.Console(formatter)`**; optional constructor / **`TryParse`** parameters (**`formatProvider`**, **`nameResolver`**, **`applyThemeWhenOutputIsRedirected`**, **`encoder`**); **Features** bullets for **`TemplateThemes`** and **`CustomConsoleTheme.*TemplateTheme`**.
+- **README** — **`ExpressionTemplate` and `TemplateTheme`** section: **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)**, **`CustomTemplateTheme`** for presets, sample **`ExpressionTemplate`** + **`WriteTo.Console(formatter)`**, optional **`TryParse`** parameters; **Features** list updated.
 - **`Serilog.Expressions` 5.0.0** — direct package reference in the library project and explicit **NuGet** dependency in **`config.nuspec`** (alongside **`Serilog.Sinks.Console`**).
 - **`config.nuspec`** — **`releaseNotes`** updated to describe **ExpressionTemplate** / **TemplateTheme** support.
 
