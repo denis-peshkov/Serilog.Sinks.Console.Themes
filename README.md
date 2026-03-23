@@ -224,9 +224,14 @@ Configuration cannot call `CustomConsoleTheme.UseTheme<MyBrandTheme>()` from JSO
 
 ### Example (static property + `appsettings.json`)
 
-In your application, declare for example:
+In your application, declare for example (namespace + class must match the `theme` type in JSON — here **`MyApp.LoggingThemes`**):
 
 ```csharp
+using Serilog.Sinks.Console.Themes;
+using Serilog.Sinks.SystemConsole.Themes;
+
+namespace MyApp;
+
 public static class LoggingThemes
 {
     public static ConsoleTheme FromTemplate { get; } =

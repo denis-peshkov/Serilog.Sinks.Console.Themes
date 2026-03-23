@@ -13,7 +13,7 @@
     <readme>docs\README.md</readme>
     <icon>icon.png</icon>
     <releaseNotes>
-      fix name convention
+      See ReleaseNotes.md — 3.0.0 removes ConsoleThemes; use CustomConsoleTheme.Dark/Light and CustomConsoleTheme.UseTheme only.
     </releaseNotes>
     <description>
       A companion library for Serilog.Sinks.Console with 24-bit true-color console themes built from System.Drawing.KnownColor, plus helpers for escape sequences.
