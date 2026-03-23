@@ -76,6 +76,17 @@ jobs:
       - name: Run tests
         run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
 
+      # Coverlet + OpenCover как в SonarCloud (.NET test coverage → Coverlet):
+      # https://docs.sonarsource.com/sonarqube-cloud/enriching/test-coverage/dotnet-test-coverage
+      - name: Coverlet OpenCover report
+        run: |
+          dotnet tool install --global coverlet.console --version 6.0.2
+          coverlet "Serilog.Sinks.Console.Themes.UnitTests/bin/${BUILD_CONFIG}/net10.0/Serilog.Sinks.Console.Themes.UnitTests.dll" \
+            --target "dotnet" \
+            --targetargs "test Serilog.Sinks.Console.Themes.UnitTests/Serilog.Sinks.Console.Themes.UnitTests.csproj --no-build --configuration ${BUILD_CONFIG} -f net10.0 --verbosity minimal" \
+            -f=opencover \
+            -o="coverage.xml"
+
       - name: SonarQube Scan
         uses: sonarsource/sonarcloud-github-action@v5 # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
         with:
@@ -91,7 +102,7 @@ jobs:
           args: >
             -Dsonar.organization=peshkov
             -Dsonar.projectKey=Serilog.Sinks.Console.Themes
-            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.cs.opencover.reportsPaths=coverage.xml
             -Dsonar.sources=Serilog.Sinks.Console.Themes/
             -Dsonar.verbose=true
         env:
