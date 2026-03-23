@@ -74,7 +74,15 @@ jobs:
           -p:NeutralLanguage=en
 
       - name: Run tests
-        run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
+        run: >
+          dotnet test /p:Configuration=$BUILD_CONFIG
+          --no-restore
+          --no-build
+          --verbosity normal
+          --collect:"XPlat Code Coverage"
+          --results-directory ./TestResults
+          --
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
       # Coverlet + OpenCover like in SonarCloud (.NET test coverage → Coverlet):
       # https://docs.sonarsource.com/sonarqube-cloud/enriching/test-coverage/dotnet-test-coverage
