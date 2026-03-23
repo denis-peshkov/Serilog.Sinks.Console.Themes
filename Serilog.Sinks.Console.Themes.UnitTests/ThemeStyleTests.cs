@@ -114,4 +114,18 @@ internal sealed class ThemeStyleTests
             .Should().Be(TrueColor.Foreground(fg) + TrueColor.Background(bg) + "\x1b[3m");
         ThemeStyle.Style(fg, bg).Should().Be(TrueColor.Foreground(fg) + TrueColor.Background(bg));
     }
+
+    [Test]
+    public void ToSgrParameter_None_branch_is_reachable_via_reflection()
+    {
+        var method = typeof(ThemeStyle).GetMethod(
+            "ToSgrParameter",
+            BindingFlags.NonPublic | BindingFlags.Static,
+            null,
+            new[] { typeof(FormatTypeEnum) },
+            null);
+        method.Should().NotBeNull();
+        var result = (string)method!.Invoke(null, new object[] { FormatTypeEnum.None })!;
+        result.Should().Be("0");
+    }
 }

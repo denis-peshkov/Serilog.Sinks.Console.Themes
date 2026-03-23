@@ -2,16 +2,19 @@
 namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>
-/// Known-color palettes for the built-in dark/light themes. Themes are built via
-/// <see cref="ConsoleThemes.Dark"/>, <see cref="ConsoleThemes.Light"/>, or <see cref="ConsoleThemes.UseTheme{T}"/>.
+/// Built-in dark/light console themes, palette constants, and <see cref="UseTheme{T}"/> for any <see cref="BaseTheme"/> template.
 /// </summary>
 /// <remarks>
 /// Prefer static <see cref="KnownColor"/> entries (not OS-reserved names like <see cref="KnownColor.ActiveCaption"/>), which are stable across platforms.
 /// With Serilog.Settings.Configuration, set <c>theme</c> to
-/// <c>Serilog.Sinks.Console.Themes.ConsoleThemes::Dark, Serilog.Sinks.Console.Themes</c> (static property) or a custom template type.
+/// <c>Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes</c> (or <c>::Light</c>) for built-in presets.
 /// </remarks>
 public static class CustomConsoleTheme
 {
+    private static readonly AnsiConsoleTheme DarkInstance = Create<DarkTheme>();
+
+    private static readonly AnsiConsoleTheme LightInstance = Create<LightTheme>();
+
     /// <summary>Adjust these <see cref="KnownColor"/> values; escape sequences are built in <see cref="TrueColor"/> / <see cref="ThemeStyle"/>.</summary>
     public static class DarkColors
     {
@@ -60,9 +63,15 @@ public static class CustomConsoleTheme
         public const KnownColor LevelFatalBackground = KnownColor.Red;
     }
 
-    /// <summary>Dark palette (<see cref="ConsoleThemes.Dark"/>).</summary>
-    public static ConsoleTheme Dark => ConsoleThemes.Dark;
+    /// <summary>Dark palette (<see cref="DarkTheme"/>).</summary>
+    public static ConsoleTheme Dark => DarkInstance;
 
-    /// <summary>Light palette (<see cref="ConsoleThemes.Light"/>).</summary>
-    public static ConsoleTheme Light => ConsoleThemes.Light;
+    /// <summary>Light palette (<see cref="LightTheme"/>).</summary>
+    public static ConsoleTheme Light => LightInstance;
+
+    /// <summary>Builds a <see cref="ConsoleTheme"/> from a <see cref="BaseTheme"/> template.</summary>
+    public static ConsoleTheme UseTheme<T>() where T : BaseTheme, new() => Create<T>();
+
+    private static AnsiConsoleTheme Create<T>() where T : BaseTheme, new() =>
+        new AnsiConsoleTheme(new T().ToStyleDictionary());
 }
