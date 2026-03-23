@@ -8,7 +8,8 @@ A small companion library for [Serilog.Sinks.Console](https://www.nuget.org/pack
 
 - **`CustomConsoleTheme`** — cached **`Dark`** / **`Light`** presets, palette constants (**`DarkColors`** / **`LightColors`**), and **`UseTheme<T>()`** for a **`ConsoleTheme`**.
 - **`CustomTemplateTheme.Dark`** / **`Light`** and **`CustomTemplateTheme.UseTheme<T>()`** — **`TemplateTheme`** presets parallel to **`CustomConsoleTheme`** (requires **`Serilog.Expressions`**).
-- **`ThemeStyle`** — fluent foreground, background, and SGR modes (`FormatTypeEnum`) for theme strings.
+- **`ThemeStyle`** — fluent foreground, background, and SGR modes (`FormatTypeEnum`) for theme strings (24-bit fragments via **`TrueColorConverter`**).
+- **`BaseTheme`**, **`DarkTheme`**, **`LightTheme`**, **`ThemeStyleConverter`** — template strings and conversion from **`ConsoleTheme`** styles to **`TemplateTheme`** for **`ExpressionTemplate`**.
 - **`TrueColorConverter`** — low-level `KnownColor` / `ConsoleColor` / `Color` → `38;2` / `48;2` fragments, plus bold combinations for emphasis.
 
 Prefer **static web colors** from `KnownColor` (for example `GhostWhite`, `CadetBlue`). OS-reserved `KnownColor` names (such as `ActiveCaption`) are rejected by `TrueColorConverter` when resolved from `KnownColor` because they are not portable.
@@ -42,7 +43,7 @@ Log.Information("Hello, themed console");
 
 Use **`CustomConsoleTheme.Light`** for a light background.
 
-To use in `appsettings.json`, have to reference [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilog.Settings.Configuration/) and wire `ReadFrom.Configuration` (for example via `UseSerilog` in ASP.NET Core, or `ReadFrom.Configuration(configuration)` when building the logger).
+To configure the logger from `appsettings.json`, add a reference to [Serilog.Settings.Configuration](https://www.nuget.org/packages/Serilog.Settings.Configuration/) and wire `ReadFrom.Configuration` (for example via `UseSerilog` in ASP.NET Core, or `ReadFrom.Configuration(configuration)` when building the logger).
 
 `theme` is resolved from a **static property** using `Namespace.Type::MemberName, AssemblyName`. For built-in presets use **`Serilog.Sinks.Console.Themes.CustomConsoleTheme::Dark, Serilog.Sinks.Console.Themes`** (or `::Light`) — same names as in code, and distinct from Serilog’s **`AnsiConsoleTheme::…`** strings.
 

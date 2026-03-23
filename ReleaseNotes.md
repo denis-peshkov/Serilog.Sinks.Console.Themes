@@ -31,9 +31,9 @@
 
 ### Documentation and packaging
 
-- **README** — **`ExpressionTemplate` and `TemplateTheme`** section: **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)**, **`CustomTemplateTheme`** for presets, sample **`ExpressionTemplate`** + **`WriteTo.Console(formatter)`**, optional **`TryParse`** parameters; **Features** list updated.
+- **README** — **`ExpressionTemplate` and `TemplateTheme`**: **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)**, **`CustomTemplateTheme`**, **`ThemeStyleConverter`**, **`BaseTheme`** / template types, **`TrueColorConverter`**; sample **`ExpressionTemplate`** + **`WriteTo.Console(formatter)`**, optional constructor parameters; **`appsettings.json`** grammar and theme **`Type::Member`** notes aligned with **`CustomConsoleTheme`** only for console themes.
 - **`Serilog.Expressions` 5.0.0** — direct package reference in the library project and explicit **NuGet** dependency in **`config.nuspec`** (alongside **`Serilog.Sinks.Console`**).
-- **`config.nuspec`** — **`releaseNotes`** updated to describe **ExpressionTemplate** / **TemplateTheme** support.
+- **`config.nuspec`** — **`description`** and **`releaseNotes`** list **ExpressionTemplate** / **TemplateTheme**, **`TrueColorConverter`**, and point to **`ReleaseNotes.md`** for breaking changes.
 
 ---
 
