@@ -85,7 +85,7 @@ jobs:
             --target "dotnet" \
             --targetargs "test Serilog.Sinks.Console.Themes.UnitTests/Serilog.Sinks.Console.Themes.UnitTests.csproj --no-build --configuration ${BUILD_CONFIG} -f net10.0 --verbosity minimal" \
             -f=opencover \
-            -o="coverage.xml"
+            -o="coverage.opencover.xml"
 
       - name: SonarQube Scan
         uses: sonarsource/sonarcloud-github-action@v5 # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
