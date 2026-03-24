@@ -10,3 +10,5 @@ global using System.Runtime.CompilerServices;
 global using System.Text.Json;
 global using System.Threading.Tasks;
 global using Serilog.Sinks.SystemConsole.Themes;
+global using Serilog.Templates;
+global using Serilog.Templates.Themes;

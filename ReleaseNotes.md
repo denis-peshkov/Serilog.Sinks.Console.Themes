@@ -4,6 +4,39 @@
 
 ---
 
+## 4.0.0 - 24 Mar 2024
+
+### Breaking change
+
+- Renamed **`TemplateThemes`** → **`CustomTemplateTheme`** (and **`TemplateThemesTests`** → **`CustomTemplateThemeTests`**). Update code and **`appsettings`** references if you used the old type name.
+- Removed **`CustomConsoleTheme.DarkTemplateTheme`** / **`LightTemplateTheme`** — use **`CustomTemplateTheme.Dark`** / **`Light`** for **`ExpressionTemplate`**.
+- Renamed **`TrueColor`** → **`TrueColorConverter`** (file **`TrueColor.cs`** → **`TrueColorConverter.cs`**; tests **`TrueColorTests`** → **`TrueColorConverterTests`**).
+
+### Theming API
+
+- **`CustomTemplateTheme`** — cached **`Dark`** / **`Light`** as **`TemplateTheme`**, plus **`UseTheme<T>()`** where **`T : BaseTheme, new()`**.
+- **`CustomConsoleTheme`** — **`ConsoleTheme`** presets only; **`ExpressionTemplate`** themes are **`CustomTemplateTheme.Dark`** / **`Light`** (no duplicate properties on **`CustomConsoleTheme`**).
+- **`BaseTheme`** — **`ToTemplateStyleDictionary()`** and **`ToTemplateTheme()`** to feed **`ExpressionTemplate`** / **`TryParse`**.
+- **`ThemeStyleConverter.ToTemplateStyles(...)`** — maps **`IReadOnlyDictionary<ConsoleThemeStyle, string>`** to **`Dictionary<TemplateThemeStyle, string>`** by enum name, with a special case for **`ConsoleThemeStyle.Scalar`** vs obsolete **`Object`**; throws **`ArgumentException`** when a console style name does not match **`TemplateThemeStyle`** (including bogus numeric enum values).
+- **`GlobalUsings.cs`** (library) — **`Serilog.Templates`** and **`Serilog.Templates.Themes`**.
+
+### Sample and tests
+
+- **`CustomTemplateThemeTests`** — non-null dark/light, **`UseTheme<DarkTheme/LightTheme>`** matches cached themes, custom **`DarkTheme`** override affects formatted output, **`ExpressionTemplate.TryParse`** with **`CustomTemplateTheme.Dark`**.
+- **`ThemeStyleConverterTests`** — full style map from **`DarkTheme`**, parity with **`BaseTheme.ToTemplateStyleDictionary()`**, invalid **`ConsoleThemeStyle`** throws.
+- **`CustomConsoleThemeTests`** — console theme caching and **`UseTheme<T>()`**.
+- **`ThemeStyleTests`** — covers private **`ToSgrParameter(FormatTypeEnum.None)`** branch (reflection) for full coverage of **`ThemeStyle`**.
+- **`TrueColorConverterTests`** — SGR fragments from **`KnownColor`** / **`ConsoleColor`** / **`Color`**, bold combinations, system **`KnownColor`** rejection.
+- **`GlobalUsings.cs`** (tests) — **`System.IO`**, **`Serilog.Events`**, **`Serilog.Parsing`**, **`Serilog.Templates`**, **`Serilog.Templates.Themes`**.
+
+### Documentation and packaging
+
+- **README** — **`ExpressionTemplate` and `TemplateTheme`**: **[Serilog.Expressions](https://www.nuget.org/packages/Serilog.Expressions/)**, **`CustomTemplateTheme`**, **`ThemeStyleConverter`**, **`BaseTheme`** / template types, **`TrueColorConverter`**; sample **`ExpressionTemplate`** + **`WriteTo.Console(formatter)`**, optional constructor parameters; **`appsettings.json`** grammar and theme **`Type::Member`** notes aligned with **`CustomConsoleTheme`** only for console themes.
+- **`Serilog.Expressions` 5.0.0** — direct package reference in the library project and explicit **NuGet** dependency in **`config.nuspec`** (alongside **`Serilog.Sinks.Console`**).
+- **`config.nuspec`** — **`description`** and **`releaseNotes`** list **ExpressionTemplate** / **TemplateTheme**, **`TrueColorConverter`**, and point to **`ReleaseNotes.md`** for breaking changes.
+
+---
+
 ## 3.0.0 - 23 Mar 2024
 
 ### Breaking change
@@ -28,7 +61,7 @@
 - **`BaseTheme`** — abstract template: one string per `ConsoleThemeStyle`, materialized via **`ToStyleDictionary()`** into an `AnsiConsoleTheme`.
 - **`DarkTheme`** / **`LightTheme`** — concrete templates using **`CustomConsoleTheme.DarkColors`** / **`LightColors`** with **`ThemeStyle`** and **`TrueColor`**.
 - **`ConsoleThemes`** — cached **`Dark`** / **`Light`**; **`UseTheme<T>()`** for `T : BaseTheme, new()`.
-- **`CustomConsoleTheme.Dark`** / **`Light`** — same instances as **`ConsoleThemes`**; **`Serilog.Settings.Configuration`** `CustomConsoleTheme::Dark` / `::Light`.
+- **`CustomConsoleTheme.Dark`** / **`Light`** — same instances as **`ConsoleThemes.Dark`** / **`Light`** (handy aliases for `WriteTo.Console` and **`Serilog.Settings.Configuration`** `::Dark` / `::Light`).
 - **`ThemeStyle`**, **`FormatTypeEnum`**, **`TrueColor`** — fluent styling and RGB / `KnownColor` / `ConsoleColor` SGR fragments.
 
 ### Sample and tests
@@ -38,14 +71,14 @@
 
 ### Documentation and packaging
 
-- **README** — built-in `theme` in `appsettings` as **`CustomConsoleTheme::Dark`** / **`::Light`**; screenshots via **`raw.githubusercontent.com`**; contributing / **`slnx`** / encoding notes.
+- **README** — `appsettings` theme string uses **`CustomConsoleTheme::Dark`** / **`::Light`** (replacing the old **`::DarkTheme`** / **`::LightTheme`** members); screenshots via **`raw.githubusercontent.com`**; contributing / **`slnx`** / encoding notes.
 - **`config.nuspec`** — description and packaged **`docs/`** assets (README + screenshots when listed in nuspec).
 
 ---
 
 ## 1.1.0 - 22 Mar 2024
 
-- Naming: preset themes exposed as **`CustomConsoleTheme.Dark`** / **`Light`** and duplicated on **`ConsoleThemes`** (same instances); configuration **`CustomConsoleTheme::Dark`** / **`::Light`**. (**`ConsoleThemes`** removed in **3.0.0**.)
+- Naming: preset themes exposed as **`CustomConsoleTheme.Dark`** / **`Light`** and **`ConsoleThemes.Dark`** / **`Light`** (aligned configuration strings **`::Dark`** / **`::Light`**).
 
 ---
 

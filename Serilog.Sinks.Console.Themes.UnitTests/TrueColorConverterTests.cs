@@ -1,14 +1,14 @@
 ﻿namespace Serilog.Sinks.Console.Themes.UnitTests;
 
 [TestFixture]
-internal sealed class TrueColorTests
+internal sealed class TrueColorConverterTests
 {
     [Test]
     public void Foreground_KnownColor_emits_true_color_sgr()
     {
         var c = Color.FromKnownColor(KnownColor.GhostWhite);
         var expected = $"\x1b[38;2;{c.R};{c.G};{c.B}m";
-        TrueColor.Foreground(KnownColor.GhostWhite).Should().Be(expected);
+        TrueColorConverter.Foreground(KnownColor.GhostWhite).Should().Be(expected);
     }
 
     [Test]
@@ -16,7 +16,7 @@ internal sealed class TrueColorTests
     {
         var c = Color.FromKnownColor(KnownColor.Maroon);
         var expected = $"\x1b[48;2;{c.R};{c.G};{c.B}m";
-        TrueColor.Background(KnownColor.Maroon).Should().Be(expected);
+        TrueColorConverter.Background(KnownColor.Maroon).Should().Be(expected);
     }
 
     [Test]
@@ -25,7 +25,7 @@ internal sealed class TrueColorTests
         var cc = ConsoleColor.DarkYellow;
         var c = Color.FromName(cc.ToString());
         var expected = $"\x1b[38;2;{c.R};{c.G};{c.B}m";
-        TrueColor.Foreground(cc).Should().Be(expected);
+        TrueColorConverter.Foreground(cc).Should().Be(expected);
     }
 
     [Test]
@@ -34,15 +34,15 @@ internal sealed class TrueColorTests
         var cc = ConsoleColor.DarkGreen;
         var c = Color.FromName(cc.ToString());
         var expected = $"\x1b[48;2;{c.R};{c.G};{c.B}m";
-        TrueColor.Background(cc).Should().Be(expected);
+        TrueColorConverter.Background(cc).Should().Be(expected);
     }
 
     [Test]
     public void Foreground_Color_and_Background_Color_emit_true_color_sgr()
     {
         var c = Color.FromArgb(11, 22, 33);
-        TrueColor.Foreground(c).Should().Be($"\x1b[38;2;{c.R};{c.G};{c.B}m");
-        TrueColor.Background(c).Should().Be($"\x1b[48;2;{c.R};{c.G};{c.B}m");
+        TrueColorConverter.Foreground(c).Should().Be($"\x1b[38;2;{c.R};{c.G};{c.B}m");
+        TrueColorConverter.Background(c).Should().Be($"\x1b[48;2;{c.R};{c.G};{c.B}m");
     }
 
     [Test]
@@ -53,7 +53,7 @@ internal sealed class TrueColorTests
         var expected = "\x1b[1m"
             + $"\x1b[38;2;{fg.R};{fg.G};{fg.B}m"
             + $"\x1b[48;2;{bg.R};{bg.G};{bg.B}m";
-        TrueColor.BoldForegroundBackground(KnownColor.White, KnownColor.Red).Should().Be(expected);
+        TrueColorConverter.BoldForegroundBackground(KnownColor.White, KnownColor.Red).Should().Be(expected);
     }
 
     [Test]
@@ -64,13 +64,13 @@ internal sealed class TrueColorTests
         var expected = "\x1b[1m"
             + $"\x1b[38;2;{fg.R};{fg.G};{fg.B}m"
             + $"\x1b[48;2;{bg.R};{bg.G};{bg.B}m";
-        TrueColor.BoldForegroundBackground(ConsoleColor.White, ConsoleColor.DarkRed).Should().Be(expected);
+        TrueColorConverter.BoldForegroundBackground(ConsoleColor.White, ConsoleColor.DarkRed).Should().Be(expected);
     }
 
     [Test]
     public void Foreground_system_KnownColor_throws()
     {
-        var act = () => TrueColor.Foreground(KnownColor.ActiveCaption);
+        var act = () => TrueColorConverter.Foreground(KnownColor.ActiveCaption);
         act.Should().Throw<ArgumentException>()
             .WithParameterName("known");
     }
@@ -78,7 +78,7 @@ internal sealed class TrueColorTests
     [Test]
     public void Background_system_KnownColor_throws()
     {
-        var act = () => TrueColor.Background(KnownColor.Desktop);
+        var act = () => TrueColorConverter.Background(KnownColor.Desktop);
         act.Should().Throw<ArgumentException>()
             .WithParameterName("known");
     }

@@ -67,32 +67,32 @@ jobs:
           -p:InformationalVersion="${GitVersion_InformationalVersion}" \
           -p:Company="Denis Peshkov" \
           -p:Product="Serilog.Sinks.Console.Themes" \
-          -p:Description="A small companion library for Serilog.Sinks.Console with 24-bit true-color console themes (`38;2` / `48;2`). Palettes use `System.Drawing.KnownColor` and extend via `BaseTheme` and `ThemeStyle`." \
+          -p:Description="A small companion library for Serilog.Sinks.Console with 24-bit true-color console themes (SGR). Palettes use System.Drawing.KnownColor and extend via BaseTheme and ThemeStyle." \
           -p:RepositoryUrl="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes.git" \
           -p:RepositoryType=git \
           -p:CLSCompliant=true \
           -p:NeutralLanguage=en
 
       - name: Run tests
-        run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
+        run: >
+          dotnet test /p:Configuration=$BUILD_CONFIG
+          --no-restore
+          --no-build
+          --verbosity normal
+          --collect:"XPlat Code Coverage"
+          --results-directory ./TestResults
+          --
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
       - name: SonarQube Scan
         uses: sonarsource/sonarcloud-github-action@v5 # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
         with:
-          #          projectBaseDir: app/
-          #          args: >
-          #            -Dsonar.organization=peshkov
-          #            -Dsonar.projectKey=Serilog.Sinks.Console.Themes
-          #            -Dsonar.python.coverage.reportPaths=coverage.xml
-          #            -Dsonar.sources=Serilog.Sinks.Console.Themes/
-          #            -Dsonar.tests=tests/
-          #            -Dsonar.test.exclusions=tests/**
-          #            -Dsonar.verbose=true
           args: >
             -Dsonar.organization=peshkov
             -Dsonar.projectKey=Serilog.Sinks.Console.Themes
-            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.cs.opencover.reportsPaths=TestResults/**/coverage.opencover.xml
             -Dsonar.sources=Serilog.Sinks.Console.Themes/
+            -Dsonar.tests=Serilog.Sinks.Console.Themes.UnitTests/
             -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -101,7 +101,7 @@ jobs:
         run: nuget pack Serilog.Sinks.Console.Themes/config.nuspec -Symbols -Version ${{ env.semVer }}
 
       - name: Create git Tag
-        if: ${{ contains('refs/heads/hotfix', github.ref) || contains('refs/heads/release', github.ref) || contains('refs/heads/master', github.ref) }}
+        if: ${{ contains('refs/heads/master', github.ref) || contains('refs/heads/release', github.ref) || contains('refs/heads/hotfix', github.ref) }}
         run: |
           git tag v${{ env.semVer }}
 

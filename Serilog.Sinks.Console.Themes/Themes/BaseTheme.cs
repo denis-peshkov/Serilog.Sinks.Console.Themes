@@ -2,7 +2,8 @@
 namespace Serilog.Sinks.Console.Themes;
 
 /// <summary>
-/// Base type for console theme templates. Override any style, then call <see cref="CustomConsoleTheme.UseTheme{T}"/> to build a <see cref="ConsoleTheme"/> for <c>WriteTo.Console</c>.
+/// Base type for console theme templates. Override any style, then call <see cref="CustomConsoleTheme.UseTheme{T}"/> for <see cref="ConsoleTheme"/>
+/// or <see cref="CustomTemplateTheme.UseTheme{T}"/> / <see cref="ToTemplateTheme"/> for <see cref="Serilog.Templates.ExpressionTemplate"/>.
 /// Built-in palettes are <see cref="CustomConsoleTheme.Dark"/> / <see cref="CustomConsoleTheme.Light"/>.
 /// </summary>
 public abstract class BaseTheme
@@ -40,23 +41,32 @@ public abstract class BaseTheme
     protected abstract string LevelFatal { get; }
 
     /// <summary>Maps this template to Serilog <see cref="ConsoleThemeStyle"/> keys.</summary>
-    public Dictionary<ConsoleThemeStyle, string> ToStyleDictionary() => new()
-    {
-        [ConsoleThemeStyle.Text] = Text,
-        [ConsoleThemeStyle.SecondaryText] = SecondaryText,
-        [ConsoleThemeStyle.TertiaryText] = TertiaryText,
-        [ConsoleThemeStyle.Invalid] = Invalid,
-        [ConsoleThemeStyle.Null] = Null,
-        [ConsoleThemeStyle.Name] = Name,
-        [ConsoleThemeStyle.String] = String,
-        [ConsoleThemeStyle.Number] = Number,
-        [ConsoleThemeStyle.Boolean] = Boolean,
-        [ConsoleThemeStyle.Scalar] = Scalar,
-        [ConsoleThemeStyle.LevelVerbose] = LevelVerbose,
-        [ConsoleThemeStyle.LevelDebug] = LevelDebug,
-        [ConsoleThemeStyle.LevelInformation] = LevelInformation,
-        [ConsoleThemeStyle.LevelWarning] = LevelWarning,
-        [ConsoleThemeStyle.LevelError] = LevelError,
-        [ConsoleThemeStyle.LevelFatal] = LevelFatal,
-    };
+    public Dictionary<ConsoleThemeStyle, string> ToStyleDictionary()
+        => new()
+        {
+            [ConsoleThemeStyle.Text] = Text,
+            [ConsoleThemeStyle.SecondaryText] = SecondaryText,
+            [ConsoleThemeStyle.TertiaryText] = TertiaryText,
+            [ConsoleThemeStyle.Invalid] = Invalid,
+            [ConsoleThemeStyle.Null] = Null,
+            [ConsoleThemeStyle.Name] = Name,
+            [ConsoleThemeStyle.String] = String,
+            [ConsoleThemeStyle.Number] = Number,
+            [ConsoleThemeStyle.Boolean] = Boolean,
+            [ConsoleThemeStyle.Scalar] = Scalar,
+            [ConsoleThemeStyle.LevelVerbose] = LevelVerbose,
+            [ConsoleThemeStyle.LevelDebug] = LevelDebug,
+            [ConsoleThemeStyle.LevelInformation] = LevelInformation,
+            [ConsoleThemeStyle.LevelWarning] = LevelWarning,
+            [ConsoleThemeStyle.LevelError] = LevelError,
+            [ConsoleThemeStyle.LevelFatal] = LevelFatal,
+        };
+
+    /// <summary>Same escape sequences as <see cref="ToStyleDictionary"/>, keyed for <see cref="ExpressionTemplate"/>.</summary>
+    public Dictionary<TemplateThemeStyle, string> ToTemplateStyleDictionary()
+        => ThemeStyleConverter.ToTemplateStyles(ToStyleDictionary());
+
+    /// <summary>Builds a <see cref="TemplateTheme"/> for <c>new ExpressionTemplate(..., theme: ...)</c>.</summary>
+    public TemplateTheme ToTemplateTheme()
+        => new(ToTemplateStyleDictionary());
 }

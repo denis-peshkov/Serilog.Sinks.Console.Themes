@@ -13,16 +13,17 @@
     <readme>docs\README.md</readme>
     <icon>icon.png</icon>
     <releaseNotes>
-      See ReleaseNotes.md — 3.0.0 removes ConsoleThemes; use CustomConsoleTheme.Dark/Light and CustomConsoleTheme.UseTheme only.
+      Add support for Serilog ExpressionTemplate and TemplateTheme
     </releaseNotes>
     <description>
       A companion library for Serilog.Sinks.Console with 24-bit true-color console themes built from System.Drawing.KnownColor, plus helpers for escape sequences.
 
-      Includes CustomConsoleTheme (Dark/Light presets, UseTheme, DarkColors/LightColors), BaseTheme templates, ThemeStyle fluent helpers, and TrueColor for RGB fragments.
+      Includes CustomConsoleTheme (Dark/Light, UseTheme, DarkColors/LightColors), CustomTemplateTheme for ExpressionTemplate, BaseTheme templates, ThemeStyle, ThemeStyleConverter, and TrueColorConverter.
     </description>
     <tags>serilog logging console ansi theme truecolor serilog-sinks-console dotnet csharp</tags>
     <dependencies>
       <dependency id="Serilog.Sinks.Console" version="6.1.1" />
+      <dependency id="Serilog.Expressions" version="5.0.0" />
     </dependencies>
   </metadata>
   <files>

@@ -55,7 +55,7 @@ internal sealed class CustomConsoleThemeTests
     {
         var theme = CustomConsoleTheme.UseTheme<TextOverrideTheme>();
         var dict = ThemeTestHelpers.GetStyles(theme);
-        dict[ConsoleThemeStyle.Text].Should().Be(TrueColor.Foreground(KnownColor.Gold));
+        dict[ConsoleThemeStyle.Text].Should().Be(TrueColorConverter.Foreground(KnownColor.Gold));
         dict[ConsoleThemeStyle.LevelFatal].Should().Be(
             ThemeTestHelpers.GetStyle(CustomConsoleTheme.Dark, ConsoleThemeStyle.LevelFatal));
     }
@@ -63,6 +63,7 @@ internal sealed class CustomConsoleThemeTests
     /// <summary>Minimal override to exercise <see cref="CustomConsoleTheme.UseTheme{T}"/> with a user-defined <see cref="BaseTheme"/>.</summary>
     private sealed class TextOverrideTheme : DarkTheme
     {
-        protected override string Text => TrueColor.Foreground(KnownColor.Gold);
+        protected override string Text => TrueColorConverter.Foreground(KnownColor.Gold);
     }
+
 }

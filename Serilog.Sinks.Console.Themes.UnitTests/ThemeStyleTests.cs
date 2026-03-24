@@ -8,33 +8,33 @@ internal sealed class ThemeStyleTests
         ThemeStyle.Unthemed.Should().BeEmpty();
 
     [Test]
-    public void Static_Foreground_KnownColor_delegates_to_TrueColor()
+    public void Static_Foreground_KnownColor_delegates_to_TrueColorConverter()
     {
-        var expected = TrueColor.Foreground(KnownColor.Coral);
+        var expected = TrueColorConverter.Foreground(KnownColor.Coral);
         ThemeStyle.Foreground(KnownColor.Coral).Should().Be(expected);
     }
 
     [Test]
-    public void Static_Foreground_ConsoleColor_delegates_to_TrueColor()
+    public void Static_Foreground_ConsoleColor_delegates_to_TrueColorConverter()
     {
-        var expected = TrueColor.Foreground(ConsoleColor.DarkCyan);
+        var expected = TrueColorConverter.Foreground(ConsoleColor.DarkCyan);
         ThemeStyle.Foreground(ConsoleColor.DarkCyan).Should().Be(expected);
     }
 
     [Test]
-    public void Static_Foreground_Color_delegates_to_TrueColor()
+    public void Static_Foreground_Color_delegates_to_TrueColorConverter()
     {
         var color = Color.FromArgb(10, 20, 30);
-        ThemeStyle.Foreground(color).Should().Be(TrueColor.Foreground(color));
+        ThemeStyle.Foreground(color).Should().Be(TrueColorConverter.Foreground(color));
     }
 
     [Test]
-    public void Static_Background_overloads_delegate_to_TrueColor()
+    public void Static_Background_overloads_delegate_to_TrueColorConverter()
     {
-        ThemeStyle.Background(KnownColor.Azure).Should().Be(TrueColor.Background(KnownColor.Azure));
-        ThemeStyle.Background(ConsoleColor.Magenta).Should().Be(TrueColor.Background(ConsoleColor.Magenta));
+        ThemeStyle.Background(KnownColor.Azure).Should().Be(TrueColorConverter.Background(KnownColor.Azure));
+        ThemeStyle.Background(ConsoleColor.Magenta).Should().Be(TrueColorConverter.Background(ConsoleColor.Magenta));
         var rgb = Color.FromArgb(40, 50, 60);
-        ThemeStyle.Background(rgb).Should().Be(TrueColor.Background(rgb));
+        ThemeStyle.Background(rgb).Should().Be(TrueColorConverter.Background(rgb));
     }
 
     [Test]
@@ -81,16 +81,16 @@ internal sealed class ThemeStyleTests
     [Test]
     public void Extension_Foreground_and_Background_append()
     {
-        var red = TrueColor.Foreground(KnownColor.Red);
-        var blue = TrueColor.Background(KnownColor.Blue);
+        var red = TrueColorConverter.Foreground(KnownColor.Red);
+        var blue = TrueColorConverter.Background(KnownColor.Blue);
         string.Empty.Foreground(KnownColor.Red).Should().Be(red);
         string.Empty.Background(KnownColor.Blue).Should().Be(blue);
-        "\x1b[1m".Foreground(ConsoleColor.Yellow).Should().Be("\x1b[1m" + TrueColor.Foreground(ConsoleColor.Yellow));
+        "\x1b[1m".Foreground(ConsoleColor.Yellow).Should().Be("\x1b[1m" + TrueColorConverter.Foreground(ConsoleColor.Yellow));
         var c = Color.Plum;
-        "\x1b[1m".Foreground(c).Should().Be("\x1b[1m" + TrueColor.Foreground(c));
-        "\x1b[1m".Background(KnownColor.Green).Should().Be("\x1b[1m" + TrueColor.Background(KnownColor.Green));
-        "\x1b[1m".Background(ConsoleColor.DarkBlue).Should().Be("\x1b[1m" + TrueColor.Background(ConsoleColor.DarkBlue));
-        "\x1b[1m".Background(c).Should().Be("\x1b[1m" + TrueColor.Background(c));
+        "\x1b[1m".Foreground(c).Should().Be("\x1b[1m" + TrueColorConverter.Foreground(c));
+        "\x1b[1m".Background(KnownColor.Green).Should().Be("\x1b[1m" + TrueColorConverter.Background(KnownColor.Green));
+        "\x1b[1m".Background(ConsoleColor.DarkBlue).Should().Be("\x1b[1m" + TrueColorConverter.Background(ConsoleColor.DarkBlue));
+        "\x1b[1m".Background(c).Should().Be("\x1b[1m" + TrueColorConverter.Background(c));
     }
 
     [Test]
@@ -107,12 +107,12 @@ internal sealed class ThemeStyleTests
     {
         var fg = Color.Salmon;
         var bg = Color.Azure;
-        ThemeStyle.Style(fg).Should().Be(TrueColor.Foreground(fg));
+        ThemeStyle.Style(fg).Should().Be(TrueColorConverter.Foreground(fg));
         ThemeStyle.Style(fg, FormatTypeEnum.BoldMode)
-            .Should().Be(TrueColor.Foreground(fg) + "\x1b[1m");
+            .Should().Be(TrueColorConverter.Foreground(fg) + "\x1b[1m");
         ThemeStyle.Style(fg, bg, FormatTypeEnum.ItalicMode)
-            .Should().Be(TrueColor.Foreground(fg) + TrueColor.Background(bg) + "\x1b[3m");
-        ThemeStyle.Style(fg, bg).Should().Be(TrueColor.Foreground(fg) + TrueColor.Background(bg));
+            .Should().Be(TrueColorConverter.Foreground(fg) + TrueColorConverter.Background(bg) + "\x1b[3m");
+        ThemeStyle.Style(fg, bg).Should().Be(TrueColorConverter.Foreground(fg) + TrueColorConverter.Background(bg));
     }
 
     [Test]
