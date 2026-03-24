@@ -1,4 +1,19 @@
-# Serilog.Sinks.Console.Themes [![NuGetVersion](https://img.shields.io/nuget/v/Serilog.Sinks.Console.Themes.svg)](https://nuget.org/packages/Serilog.Sinks.Console.Themes/) [![NugetDownloads](https://img.shields.io/nuget/dt/Serilog.Sinks.Console.Themes.svg)](https://nuget.org/packages/Serilog.Sinks.Console.Themes/) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Serilog.Sinks.Console.Themes&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Serilog.Sinks.Console.Themes) [![.NET PR](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml/badge.svg?event=pull_request)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml)
+[![License](https://img.shields.io/github/license/denis-peshkov/Serilog.Sinks.Console.Themes)](LICENSE)
+[![GitHub Release Date](https://img.shields.io/github/release-date/denis-peshkov/Serilog.Sinks.Console.Themes?label=released)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/releases)
+[![NuGetVersion](https://img.shields.io/nuget/v/Serilog.Sinks.Console.Themes.svg)](https://nuget.org/packages/Serilog.Sinks.Console.Themes/)
+[![NugetDownloads](https://img.shields.io/nuget/dt/Serilog.Sinks.Console.Themes.svg)](https://nuget.org/packages/Serilog.Sinks.Console.Themes/)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Serilog.Sinks.Console.Themes&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Serilog.Sinks.Console.Themes)
+[![issues](https://img.shields.io/github/issues/denis-peshkov/Serilog.Sinks.Console.Themes)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/issues)
+[![.NET PR](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml/badge.svg?event=pull_request)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml)
+
+![Size](https://img.shields.io/github/repo-size/denis-peshkov/Serilog.Sinks.Console.Themes)
+[![GitHub contributors](https://img.shields.io/github/contributors/denis-peshkov/Serilog.Sinks.Console.Themes)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/contributors)
+[![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/denis-peshkov/Serilog.Sinks.Console.Themes/latest?label=new+commits)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/commits/master)
+![Activity](https://img.shields.io/github/commit-activity/w/denis-peshkov/Serilog.Sinks.Console.Themes)
+![Activity](https://img.shields.io/github/commit-activity/m/denis-peshkov/Serilog.Sinks.Console.Themes)
+![Activity](https://img.shields.io/github/commit-activity/y/denis-peshkov/Serilog.Sinks.Console.Themes)
+
+# Serilog.Sinks.Console.Themes
 
 A small companion library for [Serilog.Sinks.Console](https://www.nuget.org/packages/Serilog.Sinks.Console/) that defines **24-bit true-color** console themes (`38;2` / `48;2` escape sequences). Log output uses a fixed palette based on `System.Drawing.KnownColor` so you can tune colors in one place without hand-editing escape sequences.
 
