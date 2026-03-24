@@ -3,9 +3,9 @@
 [![NuGetVersion](https://img.shields.io/nuget/v/Serilog.Sinks.Console.Themes.svg)](https://nuget.org/packages/Serilog.Sinks.Console.Themes/)
 [![NugetDownloads](https://img.shields.io/nuget/dt/Serilog.Sinks.Console.Themes.svg)](https://nuget.org/packages/Serilog.Sinks.Console.Themes/)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Serilog.Sinks.Console.Themes&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Serilog.Sinks.Console.Themes)
+[![issues](https://img.shields.io/github/issues/denis-peshkov/Serilog.Sinks.Console.Themes)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/issues)
 [![.NET PR](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml/badge.svg?event=pull_request)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/actions/workflows/dotnet.yml)
 
-[![issues](https://img.shields.io/github/issues/denis-peshkov/Serilog.Sinks.Console.Themes)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/issues)
 ![Size](https://img.shields.io/github/repo-size/denis-peshkov/Serilog.Sinks.Console.Themes)
 [![GitHub contributors](https://img.shields.io/github/contributors/denis-peshkov/Serilog.Sinks.Console.Themes)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/contributors)
 [![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/denis-peshkov/Serilog.Sinks.Console.Themes/latest?label=new+commits)](https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes/commits/master)
