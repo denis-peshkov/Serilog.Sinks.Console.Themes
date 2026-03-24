@@ -1,23 +1,22 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: .NET
 
 on:
   push:
     branches:
       - master
-      - dev
-      - hotfix/*
       - release/*
-      - feature/*
+      - hotfix/*
   pull_request:
     branches:
       - master
-  workflow_dispatch: # <-- вот это даёт ручной запуск
+  workflow_dispatch: # allows manual runs from the Actions tab
 
 jobs:
   build:
+    permissions: # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#defining-access-for-the-github_token-scopes
+      contents: read
 
     env:
       BUILD_CONFIG: 'Release'
@@ -26,10 +25,11 @@ jobs:
     runs-on: ubuntu-22.04 # ubuntu-latest
 
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Disabling shallow clones is recommended for improving the relevancy of reporting
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -60,18 +60,18 @@ jobs:
       - name: Build
         run: |
           dotnet build "$SOLUTION" --configuration "$BUILD_CONFIG" --no-restore \
-          -p:Configuration=$BUILD_CONFIG \
-          -p:Version=${GitVersion_SemVer} \
-          -p:AssemblyVersion=${GitVersion_AssemblySemVer} \
-          -p:FileVersion=${GitVersion_AssemblySemFileVer} \
-          -p:InformationalVersion="${GitVersion_InformationalVersion}" \
-          -p:Company="Denis Peshkov" \
-          -p:Product="Serilog.Sinks.Console.Themes" \
-          -p:Description="A small companion library for Serilog.Sinks.Console with 24-bit true-color console themes (SGR). Palettes use System.Drawing.KnownColor and extend via BaseTheme and ThemeStyle." \
-          -p:RepositoryUrl="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes.git" \
-          -p:RepositoryType=git \
-          -p:CLSCompliant=true \
-          -p:NeutralLanguage=en
+            -p:Configuration=$BUILD_CONFIG \
+            -p:Version=${GitVersion_SemVer} \
+            -p:AssemblyVersion=${GitVersion_AssemblySemVer} \
+            -p:FileVersion=${GitVersion_AssemblySemFileVer} \
+            -p:InformationalVersion="${GitVersion_InformationalVersion}" \
+            -p:Company="Denis Peshkov" \
+            -p:Product="Serilog.Sinks.Console.Themes" \
+            -p:Description="A small companion library for Serilog.Sinks.Console with 24-bit true-color console themes (SGR). Palettes use System.Drawing.KnownColor and extend via BaseTheme and ThemeStyle." \
+            -p:RepositoryUrl="https://github.com/denis-peshkov/Serilog.Sinks.Console.Themes.git" \
+            -p:RepositoryType=git \
+            -p:CLSCompliant=true \
+            -p:NeutralLanguage=en
 
       - name: Run tests
         run: >
